@@ -1,8 +1,8 @@
 <div class="login-page" [@routerTransition]>
     <div class="row justify-content-md-center">
         <div class="col-md-4">
-            <img src="assets/images/logo.png" width="150px" class="user-avatar" />
-            <h1>SB Admin BS4 Angular5</h1>
+            <span ><i class="fa fa-hospital-o fa-5x"></i></span>
+            <h1>Medical R</h1>
             <form role="form">
                 <div class="form-content">
                     <div class="form-group">
@@ -10,10 +10,10 @@
                     </div>
 
                     <div class="form-group">
-                        <input type="password" class="form-control input-underline input-lg" id="" placeholder="Password">
+                        <input type="password" class="form-control input-underline input-lg" id="" placeholder="Senha">
                     </div>
                 </div>
-                <a class="btn rounded-btn" [routerLink]="['/dashboard']" (click)="onLoggedin()"> Log in </a>
+                <a class="btn rounded-btn" [routerLink]="['/dashboard']" (click)="onLoggedin()"> Entrar </a>
                 &nbsp;
                 <a class="btn rounded-btn" [routerLink]="['/signup']">Registrar</a>
             </form>

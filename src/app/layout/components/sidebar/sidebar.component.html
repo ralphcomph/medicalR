@@ -6,6 +6,10 @@
 
         <a [routerLink]="['/forms']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-edit"></i>&nbsp;Forms
+        </a>  
+        
+        <a [routerLink]="['/usuarios']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-user"></i>&nbsp;Usuários
         </a>    
         
         <a [routerLink]="['/login']" (click)="onLoggedout()" class="list-group-item" >

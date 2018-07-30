@@ -1,9 +1,22 @@
 <div [@routerTransition]>
     <app-page-header [heading]="'Usuários'" [icon]="'fa-user'"></app-page-header>
-
-    <div class="row">
-            <ng2-smart-table 
-            [settings]="settings" [source]="source">
-        </ng2-smart-table>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <input #search class="search" type="text" placeholder="Pesquisar..." (keyup)="onSearch(search.value)">
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row"></div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <ng2-smart-table [settings]="settings" [source]="source" (createConfirm)="oncreateConfirm($event)" (editConfirm)="oneditConfirm($event)"
+                    (deleteConfirm)="ondeleteConfirm($event)">
+                </ng2-smart-table>
+            </div>
+        </div>
     </div>
 </div>

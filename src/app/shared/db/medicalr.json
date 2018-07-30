@@ -1,8 +1,116 @@
 {
-    "usuarios": [
-
-    ] 
-
-    
-
+  "usuarios": [
+    {
+      "id": 1,
+      "perfil": "teste",
+      "nome": "teste",
+      "email": "teste",
+      "senha": "111",
+      "userdel": 1
+    },
+    {
+      "id": 2,
+      "perfil": "teste",
+      "nome": "teste",
+      "email": "teste",
+      "senha": "222",
+      "userdel": 1
+    },
+    {
+      "id": 3,
+      "perfil": "rrrrr",
+      "nome": "fred raul",
+      "email": "teste",
+      "senha": "333",
+      "userdel": 0
+    },
+    {
+      "id": 4,
+      "perfil": "teste",
+      "nome": "teste",
+      "email": "teste",
+      "senha": "444",
+      "userdel": 0
+    },
+    {
+      "id": 5,
+      "perfil": "teste",
+      "nome": "teste",
+      "email": "teste",
+      "senha": "555",
+      "userdel": 1
+    },
+    {
+      "id": 6,
+      "perfil": "teste",
+      "nome": "teste",
+      "email": "teste",
+      "senha": "777",
+      "userdel": 0
+    },
+    {
+      "id": 7,
+      "perfil": "teste",
+      "nome": "teste",
+      "email": "teste",
+      "senha": "888",
+      "userdel": 0
+    },
+    {
+      "id": 8,
+      "perfil": "ddd",
+      "nome": "ddd",
+      "email": "dd",
+      "senha": "111",
+      "userdel": 0
+    },
+    {
+      "id": 9,
+      "perfil": "www",
+      "nome": "www",
+      "email": "www",
+      "senha": "222",
+      "userdel": 0
+    },
+    {
+      "id": 10,
+      "perfil": "qqq",
+      "nome": "qqq",
+      "email": "qqq",
+      "senha": "444",
+      "userdel": 0
+    },
+    {
+      "id": 11,
+      "perfil": "ttt",
+      "nome": "ttt",
+      "email": "ttt",
+      "senha": "555",
+      "userdel": 0
+    },
+    {
+      "id": 12,
+      "perfil": "yyy",
+      "nome": "yyy",
+      "email": "yyy",
+      "senha": "777",
+      "userdel": 0
+    },
+    {
+      "id": 13,
+      "perfil": "vvv",
+      "nome": "vvv",
+      "email": "vvv",
+      "senha": "888",
+      "userdel": 1
+    },
+    {
+      "id": 14,
+      "perfil": "",
+      "nome": "",
+      "email": "",
+      "senha": "",
+      "userdel": 0
+    }
+  ]
 }

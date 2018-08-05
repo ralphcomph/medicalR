@@ -20,7 +20,7 @@ export class UsuarioService {
     public SelectUsuarios(): Promise<Usuario[]> {              
         return this.http.get(`${URL_API}/usuarios?userdel=0`)
             .toPromise()
-            .then((resp: any) => { return resp.json()})  
+            .then((resp: Response) => resp.json())             
     }  
     
     public CreateUsuarios(usuario: Usuario, userdel : number): Observable<number> {

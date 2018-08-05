@@ -19,7 +19,7 @@
     {
       "id": 3,
       "perfil": "rrrrr",
-      "nome": "fred raul",
+      "nome": "fred",
       "email": "teste",
       "senha": "333",
       "userdel": 0
@@ -110,7 +110,7 @@
       "nome": "",
       "email": "",
       "senha": "",
-      "userdel": 0
+      "userdel": 1
     }
   ]
 }

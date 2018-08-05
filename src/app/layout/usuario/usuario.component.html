@@ -1,5 +1,86 @@
+
 <div [@routerTransition]>
     <app-page-header [heading]="'Usuários'" [icon]="'fa-user'"></app-page-header>
+
+    <div class="container">
+            <div>
+                    <form [formGroup]="formulario" novalidate (ngSubmit)="confirmarCompra()">
+    
+                            <h5>Sua Compra</h5>
+                            <hr />                     
+                                               
+                            <h5>Dados de entrega</h5>
+                            <hr />
+                      
+                            <div class="form-row">
+                      
+                              <div class="form-group col-md-6">
+                                <input 
+                                  type="text" 
+                                  class="form-control" 
+                                  placeholder="Endereço" 
+                                  autocomplete="off" 
+                                  formControlName="endereco"
+                                >
+                                <small *ngIf="formulario.get('endereco').valid && formulario.get('endereco').touched" class="form-text text-success">Ok</small>
+                                <small *ngIf="!formulario.get('endereco').valid && formulario.get('endereco').touched" class="form-text text-danger">Endereço inválido</small>
+                              </div>
+                      
+                              <div class="form-group col-md-2">
+                                <input 
+                                  type="text" 
+                                  class="form-control" 
+                                  placeholder="Número" 
+                                  autocomplete="off"
+                                  formControlName="numero"
+                                >
+                                <small *ngIf="formulario.get('numero').valid && formulario.get('numero').touched" class="form-text text-success">Ok</small>
+                                <small *ngIf="!formulario.get('numero').valid && formulario.get('numero').touched" class="form-text text-danger">Número inválido</small>
+                              </div>
+                      
+                              <div class="form-group col-md-4">
+                                <input 
+                                  type="text" 
+                                  class="form-control" 
+                                  placeholder="Complemento" 
+                                  autocomplete="off"
+                                  formControlName="complemento"
+                                >
+                              </div>
+                      
+                            </div>
+                            <br />
+                      
+                            <h5>Dados de pagamento</h5>
+                            <hr />
+                      
+                            <div class="form-row">
+                                
+                              <div class="form-group col-md-3">
+                                <select 
+                                  class="form-control"
+                                  formControlName="formaPagamento"
+                                >
+                                  <option value="">Selecione uma opção</option>
+                                  <option value="dinheiro">Dinheiro</option>
+                                  <option value="debito">Débito</option>
+                                </select>
+                                <small *ngIf="formulario.get('formaPagamento').valid && formulario.get('formaPagamento').touched" class="form-text text-success">Ok</small>
+                                <small *ngIf="!formulario.get('formaPagamento').valid && formulario.get('formaPagamento').touched" class="form-text text-danger">Forma de pagamento inválida</small>
+                              </div>
+                            </div>
+                      
+                            <hr />
+                            <button 
+                              type="submit" 
+                              class="btn btn-primary btn-lg"
+                            >Cofirmar compra</button>
+                          </form>
+            </div>    
+    
+           
+
+
     <div class="container">
         <div class="row">
             <div class="col-sm">
@@ -7,9 +88,7 @@
             </div>
         </div>
     </div>
-    <div class="container">
-        <div class="row"></div>
-    </div>
+  
     <div class="container">
         <div class="row">
             <div class="col-sm">

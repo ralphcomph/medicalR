@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../router.animations';
+import { FormGroup, FormControl, Validators } from '@angular/forms'
 
 import { LocalDataSource } from 'ng2-smart-table';
 import { UsuarioService } from '../../shared/services/usuario.service'
@@ -16,8 +17,17 @@ export class UsuarioComponent implements OnInit {
 
   public usuario: Usuario[];
   public usuarioId: number;
+  public idPedidoCompra: number
 
   settings = {
+    mode: 'inline',
+    hideHeader: false,
+    hideSubHeader: true,
+    noDataMessage: "Nenhum usuário cadastrado",  
+    actions: {
+      columnTitle: "",
+      add: false,
+    },
     attr: {
       class: 'table table-bordered'
     },   
@@ -43,6 +53,7 @@ export class UsuarioComponent implements OnInit {
       senha: {
         title: 'Senha',
         filter: false,
+        defaultValue: '000',      
       }
     },
     add: {
@@ -65,13 +76,20 @@ export class UsuarioComponent implements OnInit {
 
   source: LocalDataSource;
 
+  public formulario: FormGroup = new FormGroup({
+    'endereco': new FormControl(null, [ Validators.required, Validators.minLength(3), Validators.maxLength(120) ]),
+    'numero': new FormControl(null, [ Validators.required, Validators.minLength(1), Validators.maxLength(20) ]),
+    'complemento': new FormControl(null),
+    'formaPagamento': new FormControl(null, [ Validators.required ])
+  })
+
   constructor(private usuarioService: UsuarioService) {
     this.source = new LocalDataSource();
   }
 
-  onSearch(query: string) {
+  onSearch(query: string = '') {
     if (query === '') {  
-     
+      this.source.setFilter([]);
     }
     else {
       this.source.setFilter([
@@ -120,7 +138,19 @@ export class UsuarioComponent implements OnInit {
   ngOnInit() {
     this.usuarioService.SelectUsuarios()
       .then((usuario: Usuario[]) => {
-        this.source.load(usuario)
-      })
+        this.source.load(usuario)       
+      })      
+  }
+
+  public confirmarCompra(): void {
+    if (this.formulario.status === 'INVALID') {
+      console.log('formulário está inválido')
+
+      this.formulario.get('endereco').markAsTouched()
+      this.formulario.get('numero').markAsTouched()
+      this.formulario.get('complemento').markAsTouched()
+      this.formulario.get('formaPagamento').markAsTouched()
+    
+    } 
   }
 }

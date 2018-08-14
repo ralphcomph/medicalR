@@ -1,8 +1,10 @@
 export class Usuario {
-    public id: number
-    public id_perfil: Array<object>
-    public nome: string
-    public email: string
-    public senha: string
-    public userdel: number    
+    constructor(
+        public id: number,
+        public perfil: string,
+        public nome: string,
+        public email: string,
+        public senha: string,
+        public userdel: number
+    ) { }
 }

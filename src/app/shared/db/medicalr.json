@@ -1,4 +1,26 @@
 {
+  "perfil": [
+    {
+      "id": 1,
+      "descricao": "Administrador",
+      "userdel": 0
+    },
+    {
+      "id": 2,
+      "descricao": "Recepcionista",
+      "userdel": 0
+    },
+    {
+      "id": 3,
+      "descricao": "Paciente",
+      "userdel": 0
+    },
+    {
+      "id": 4,
+      "descricao": "Médico",
+      "userdel": 0
+    }
+  ],
   "usuarios": [
     {
       "id": 1,
@@ -22,13 +44,13 @@
       "nome": "fred",
       "email": "teste",
       "senha": "333",
-      "userdel": 0
+      "userdel": 1
     },
     {
       "id": 4,
-      "perfil": "teste",
-      "nome": "teste",
-      "email": "teste",
+      "perfil": "Recepcionista",
+      "nome": "TESTE",
+      "email": "TESTE",
       "senha": "444",
       "userdel": 0
     },
@@ -42,7 +64,7 @@
     },
     {
       "id": 6,
-      "perfil": "teste",
+      "perfil": "Paciente",
       "nome": "teste",
       "email": "teste",
       "senha": "777",
@@ -50,7 +72,7 @@
     },
     {
       "id": 7,
-      "perfil": "teste",
+      "perfil": "Médico",
       "nome": "teste",
       "email": "teste",
       "senha": "888",
@@ -58,7 +80,7 @@
     },
     {
       "id": 8,
-      "perfil": "ddd",
+      "perfil": "Paciente",
       "nome": "ddd",
       "email": "dd",
       "senha": "111",
@@ -66,7 +88,7 @@
     },
     {
       "id": 9,
-      "perfil": "www",
+      "perfil": "Recepcionista",
       "nome": "www",
       "email": "www",
       "senha": "222",
@@ -74,7 +96,7 @@
     },
     {
       "id": 10,
-      "perfil": "qqq",
+      "perfil": "Paciente",
       "nome": "qqq",
       "email": "qqq",
       "senha": "444",
@@ -82,7 +104,7 @@
     },
     {
       "id": 11,
-      "perfil": "ttt",
+      "perfil": "Paciente",
       "nome": "ttt",
       "email": "ttt",
       "senha": "555",
@@ -90,7 +112,7 @@
     },
     {
       "id": 12,
-      "perfil": "yyy",
+      "perfil": "Paciente",
       "nome": "yyy",
       "email": "yyy",
       "senha": "777",

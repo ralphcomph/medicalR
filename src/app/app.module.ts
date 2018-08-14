@@ -35,10 +35,10 @@ export const createTranslateLoader = (http: HttpClient) => {
                 useFactory: createTranslateLoader,
                 deps: [HttpClient]
             }
-        }),
+        }),       
         AppRoutingModule,
         FormsModule,
-        ReactiveFormsModule            
+        ReactiveFormsModule                   
     ],
     declarations: [AppComponent],
     providers: [AuthGuard],

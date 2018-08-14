@@ -23,11 +23,11 @@ export class UsuarioService {
             .then((resp: Response) => resp.json())             
     }  
     
-    public CreateUsuarios(usuario: Usuario, userdel : number): Observable<number> {
+    public CreateUsuarios(usuario: Usuario, userdel : number): void {
         usuario.userdel = userdel; 
         let headers: Headers = new Headers()
         headers.append('Content-type', 'application/json')
-        return this.http.post(
+         this.http.post(
             `${URL_API}/usuarios/`,
             JSON.stringify(usuario),
             new RequestOptions({ headers: headers })

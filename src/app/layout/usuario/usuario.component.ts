@@ -1,23 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../router.animations';
-import { FormGroup, FormControl, Validators } from '@angular/forms'
 
 import { LocalDataSource } from 'ng2-smart-table';
 import { UsuarioService } from '../../shared/services/usuario.service'
 import { Usuario } from '../../shared/models/usuario.model'
+import { PerfilService } from '../../shared/services/perfil.service'
+import { Perfil } from '../../shared/models/perfil.model'
 
 @Component({
   selector: 'app-usuario',
   templateUrl: './usuario.component.html',
   styleUrls: ['./usuario.component.scss'],
-  providers: [UsuarioService],
+  providers: [UsuarioService, PerfilService],
   animations: [routerTransition()]
 })
+
+//type Fil = { value: string; title: string };
+
 export class UsuarioComponent implements OnInit {
 
-  public usuario: Usuario[];
+  public perfil_data: Perfil[];
   public usuarioId: number;
-  public idPedidoCompra: number
+  
+  //public fil_data: Fil[];
 
   settings = {
     mode: 'inline',
@@ -34,26 +39,41 @@ export class UsuarioComponent implements OnInit {
     columns: {
       id: {
         title: 'ID',
-        filter: false,
+        filter: false,      
         editable: false,
         addable: false,
       },
       perfil: {
         title: 'Perfil',
         filter: false,
-      },
+        type: 'html',
+        editor: {
+          type: 'list',
+          config: {
+            list: [   
+              {
+                value: 'Administrador',
+                title: 'Administrador',             
+              },
+              {
+                value: 'Recepcionista',      
+                title: 'Recepcionista',                
+              },
+              {
+                value: 'Paciente',
+                title: 'Paciente',               
+              },
+              {
+                value: 'Médico',  
+                title: 'Médico',                
+              }
+            ],
+          },
+        },
+      },     
       nome: {
         title: 'Nome',
         filter: false,
-      },
-      email: {
-        title: 'E-mail',
-        filter: false,
-      },
-      senha: {
-        title: 'Senha',
-        filter: false,
-        defaultValue: '000',      
       }
     },
     add: {
@@ -76,14 +96,10 @@ export class UsuarioComponent implements OnInit {
 
   source: LocalDataSource;
 
-  public formulario: FormGroup = new FormGroup({
-    'endereco': new FormControl(null, [ Validators.required, Validators.minLength(3), Validators.maxLength(120) ]),
-    'numero': new FormControl(null, [ Validators.required, Validators.minLength(1), Validators.maxLength(20) ]),
-    'complemento': new FormControl(null),
-    'formaPagamento': new FormControl(null, [ Validators.required ])
-  })
-
-  constructor(private usuarioService: UsuarioService) {
+  constructor(
+    private usuarioService: UsuarioService,
+    private perfilService: PerfilService
+  ) {
     this.source = new LocalDataSource();
   }
 
@@ -102,20 +118,16 @@ export class UsuarioComponent implements OnInit {
           search: query
         },
         {
-          field: 'email',
+          field: 'perfil',
           search: query
-        }
+        }     
       ], false);
     }
   }
 
   oncreateConfirm(event) {
-    this.usuarioService.CreateUsuarios(event.newData, 0)
-      .subscribe((id: number) => {
-        this.usuarioId = id
-      })
-    event.confirm.resolve(event.newData);
-    //this.source.refresh 
+    this.usuarioService.CreateUsuarios(event.newData, 0);     
+    event.confirm.resolve(event.newData);  
   }
 
   oneditConfirm(event) {
@@ -123,34 +135,31 @@ export class UsuarioComponent implements OnInit {
       .subscribe((id: number) => {
         this.usuarioId = id
       })
-    event.confirm.resolve(event.newData);
-    //this.source.refresh
+    event.confirm.resolve(event.newData);   
   }
 
   ondeleteConfirm(event) {
     this.usuarioService.DeleteUsuarios(event.data, 1)
       .subscribe(() => {
       })
-    event.confirm.resolve(event.data);
-    //this.source.refresh
+    event.confirm.resolve(event.data);    
   }
 
-  ngOnInit() {
+  ngOnInit() { 
+
+    //this.fil_data.push({value : "1" , title : "teste 1"});
+    //this.fil_data.push({value : "2" , title : "teste 2"});
+    //this.fil_data.push({value : "3" , title : "teste 3"});  
+
+    //this.perfilService.SelectPerfil()
+    //  .then((perfil: Perfil[]) => {
+    //     this.perfil_data = perfil 
+    //    console.log(this.perfil_data)
+    //  })  
+
     this.usuarioService.SelectUsuarios()
       .then((usuario: Usuario[]) => {
         this.source.load(usuario)       
-      })      
-  }
-
-  public confirmarCompra(): void {
-    if (this.formulario.status === 'INVALID') {
-      console.log('formulário está inválido')
-
-      this.formulario.get('endereco').markAsTouched()
-      this.formulario.get('numero').markAsTouched()
-      this.formulario.get('complemento').markAsTouched()
-      this.formulario.get('formaPagamento').markAsTouched()
-    
-    } 
+      })  
   }
 }

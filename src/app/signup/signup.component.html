@@ -3,24 +3,66 @@
         <div class="col-md-4">            
             <span ><i class="fa fa-hospital-o fa-5x"></i></span>
             <h1> Medical R </h1>
-            <form role="form">
+            <form role="form" [formGroup]="formLogin">
                 <div class="form-content">
                     <div class="form-group">
-                        <input type="text" class="form-control input-underline input-lg" id="" placeholder="Nome">
+                        <input 
+                        type="text" 
+                        class="form-control input-underline input-lg"                         
+                        placeholder="Nome"
+                        id="nome"
+                        formControlName="nome"
+                        >
+                        <small *ngIf="!formLogin.get('nome').valid && formLogin.get('nome').touched" class="form-text text-danger">Nome deve conter no mín. 3 e no máx. 40</small>
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="form-control input-underline input-lg" id="" placeholder="Email">
+                        <input 
+                        type="text" 
+                        class="form-control input-underline input-lg"                        
+                        placeholder="E-mail"
+                        id="email"
+                        formControlName="email"
+                        >
+                        <small *ngIf="!formLogin.get('email').valid && formLogin.get('email').touched" class="form-text text-danger">E-mail inválido</small>
                     </div>
 
                     <div class="form-group">
-                        <input type="password" class="form-control input-underline input-lg" id="" placeholder="Senha">
-                    </div>
+                        <select 
+                          class="form-control"
+                          formControlName="perfil"
+                        >
+                          <option value="">Indefinido</option>                   
+                          <option value="Recepcionista">Recepcionista</option>
+                          <option value="Paciente">Paciente</option>
+                          <option value="Médico">Médico</option>
+                        </select>                      
+                        <small *ngIf="!formLogin.get('perfil').valid && formLogin.get('perfil').touched" class="form-text text-danger">Perfil inválido</small>
+                      </div>
+
                     <div class="form-group">
-                        <input type="password" class="form-control input-underline input-lg" id="" placeholder="Confirmar Senha">
+                        <input 
+                        type="password" 
+                        class="form-control input-underline input-lg"                         
+                        placeholder="Senha"
+                        id="senha"
+                        formControlName="senha"
+                        >
+                        <small *ngIf="!formLogin.get('senha').valid && formLogin.get('senha').touched" class="form-text text-danger">Senha deve conter 6 caracteres</small>                        
                     </div>
+                    
+                    <div class="form-group">
+                        <input 
+                        type="password" 
+                        class="form-control input-underline input-lg"                        
+                        placeholder="Confirmar Senha"
+                        id="confirmasenha"
+                        formControlName="confirmasenha"
+                        >
+                        <small *ngIf="!formLogin.get('confirmasenha').valid && formLogin.get('confirmasenha').touched" class="form-text text-danger">Senha deve conter 6 caracteres</small>                                                
+                    </div>                   
                 </div>
-                <a class="btn rounded-btn" [routerLink]="['/dashboard']"> Registrar </a>&nbsp;
+                <a class="btn rounded-btn" (click)="validaUsuario()"> Registrar </a>&nbsp;
                 <a class="btn rounded-btn" [routerLink]="['/login']"> Voltar </a>
             </form>
         </div>

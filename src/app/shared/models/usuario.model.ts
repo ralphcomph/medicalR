@@ -4,7 +4,6 @@ export class Usuario {
         public perfil: string,
         public nome: string,
         public email: string,
-        public senha: string,
-        public userdel: number
+        public senha: string      
     ) { }
 }

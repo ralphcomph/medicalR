@@ -21,25 +21,25 @@ export class UsuarioComponent implements OnInit {
 
   public perfil_data: Perfil[];
   public usuarioId: number;
-  
+
   //public fil_data: Fil[];
 
   settings = {
     mode: 'inline',
     hideHeader: false,
     hideSubHeader: true,
-    noDataMessage: "Nenhum usuário cadastrado",  
+    noDataMessage: "Nenhum usuário cadastrado",
     actions: {
       columnTitle: "",
       add: false,
     },
     attr: {
       class: 'table table-bordered'
-    },   
+    },
     columns: {
       id: {
         title: 'ID',
-        filter: false,      
+        filter: false,
         editable: false,
         addable: false,
       },
@@ -50,27 +50,27 @@ export class UsuarioComponent implements OnInit {
         editor: {
           type: 'list',
           config: {
-            list: [   
+            list: [
               {
                 value: 'Administrador',
-                title: 'Administrador',             
+                title: 'Administrador',
               },
               {
-                value: 'Recepcionista',      
-                title: 'Recepcionista',                
+                value: 'Atendente',
+                title: 'Atendente',
               },
               {
                 value: 'Paciente',
-                title: 'Paciente',               
+                title: 'Paciente',
               },
               {
-                value: 'Médico',  
-                title: 'Médico',                
+                value: 'Médico',
+                title: 'Médico',
               }
             ],
           },
         },
-      },     
+      },
       nome: {
         title: 'Nome',
         filter: false,
@@ -104,7 +104,7 @@ export class UsuarioComponent implements OnInit {
   }
 
   onSearch(query: string = '') {
-    if (query === '') {  
+    if (query === '') {
       this.source.setFilter([]);
     }
     else {
@@ -120,32 +120,37 @@ export class UsuarioComponent implements OnInit {
         {
           field: 'perfil',
           search: query
-        }     
+        }
       ], false);
     }
   }
 
   oncreateConfirm(event) {
-    this.usuarioService.CreateUsuarios(event.newData, 0);     
-    event.confirm.resolve(event.newData);  
+    this.usuarioService.CreateUsuarios(event.newData);
+    event.confirm.resolve(event.newData);
   }
 
   oneditConfirm(event) {
-    this.usuarioService.UpdateUsuarios(event.newData, 0)
+    this.usuarioService.UpdateUsuarios(event.newData)
       .subscribe((id: number) => {
         this.usuarioId = id
       })
-    event.confirm.resolve(event.newData);   
+    event.confirm.resolve(event.newData);
   }
 
   ondeleteConfirm(event) {
-    this.usuarioService.DeleteUsuarios(event.data, 1)
-      .subscribe(() => {
-      })
-    event.confirm.resolve(event.data);    
+    console.log(event.data);
+    if (window.confirm('Tem certeza que deseja excluir o usuário ' + event.data.id + ' ?')) {
+      this.usuarioService.DeleteUsuarios(event.data)
+        .subscribe(() => {
+        })
+      event.confirm.resolve(event.data);
+    } else {
+      event.confirm.reject();
+    }
   }
 
-  ngOnInit() { 
+  ngOnInit() {
 
     //this.fil_data.push({value : "1" , title : "teste 1"});
     //this.fil_data.push({value : "2" , title : "teste 2"});
@@ -159,7 +164,7 @@ export class UsuarioComponent implements OnInit {
 
     this.usuarioService.SelectUsuarios()
       .then((usuario: Usuario[]) => {
-        this.source.load(usuario)       
-      })  
+        this.source.load(usuario)
+      })
   }
 }

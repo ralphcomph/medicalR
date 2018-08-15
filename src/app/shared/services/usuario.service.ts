@@ -18,13 +18,12 @@ export class UsuarioService {
     constructor(private http: Http){}
     
     public SelectUsuarios(): Promise<Usuario[]> {              
-        return this.http.get(`${URL_API}/usuarios?userdel=0`)
+        return this.http.get(`${URL_API}/usuarios`)
             .toPromise()
             .then((resp: Response) => resp.json())             
     }  
     
-    public CreateUsuarios(usuario: Usuario, userdel : number): void {
-        usuario.userdel = userdel; 
+    public CreateUsuarios(usuario: Usuario): void {       
         let headers: Headers = new Headers()
         headers.append('Content-type', 'application/json')
          this.http.post(
@@ -35,8 +34,7 @@ export class UsuarioService {
         .map((resposta: Response) => resposta.json().id)       
     }   
 
-    public UpdateUsuarios(usuario: Usuario, userdel : number): Observable<number> {
-        usuario.userdel = userdel;
+    public UpdateUsuarios(usuario: Usuario): Observable<number> {       
         let headers: Headers = new Headers()
         headers.append('Content-type', 'application/json')
         return this.http.put(
@@ -47,13 +45,11 @@ export class UsuarioService {
         .map((resposta: Response) => resposta.json().id )       
     }   
 
-    public DeleteUsuarios(usuario: Usuario, userdel : number): Observable<null> {
-        usuario.userdel = userdel;
+    public DeleteUsuarios(usuario: Usuario): Observable<null> {       
         let headers: Headers = new Headers()
         headers.append('Content-type', 'application/json')
-        return this.http.put(
-            `${URL_API}/usuarios/${usuario.id}`,
-            JSON.stringify(usuario),
+        return this.http.delete(
+            `${URL_API}/usuarios/${usuario.id}`,           
             new RequestOptions({ headers: headers })
         )
         .map((resposta: Response) => null )       

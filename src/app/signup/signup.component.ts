@@ -66,8 +66,7 @@ export class SignupComponent implements OnInit {
                 this.formLogin.value.perfil,
                 this.formLogin.value.nome,
                 this.formLogin.value.email,
-                this.formLogin.value.senha,
-                null
+                this.formLogin.value.senha
             )
 
             this.autenticacaoService.RegistrarUsuario(usuario);

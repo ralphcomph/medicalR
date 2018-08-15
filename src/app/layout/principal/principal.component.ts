@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 
 @Component({
-    selector: 'app-dashboard',
-    templateUrl: './dashboard.component.html',
-    styleUrls: ['./dashboard.component.scss'],
+    selector: 'app-principal',
+    templateUrl: './principal.component.html',
+    styleUrls: ['./principal.component.scss'],
     animations: [routerTransition()]
 })
-export class DashboardComponent implements OnInit {
+export class PrincipalComponent implements OnInit {
     public alerts: Array<any> = [];
     public sliders: Array<any> = [];
 

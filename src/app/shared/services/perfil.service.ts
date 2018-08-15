@@ -15,7 +15,7 @@ export class PerfilService {
     
     public SelectPerfil(): Promise<Perfil[]> {
         console.log("chegamos aqui")               
-        return this.http.get(`${URL_API}/perfil?userdel=0`)
+        return this.http.get(`${URL_API}/perfil`)
             .toPromise()
             .then((resp: Response) => resp.json())             
     }  

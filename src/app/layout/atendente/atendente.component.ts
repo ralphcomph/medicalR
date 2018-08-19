@@ -20,11 +20,11 @@ export class AtendenteComponent implements OnInit {
   settings = {
     mode: 'inline',
     hideHeader: false,
-    hideSubHeader: true,
+    hideSubHeader: false,
     noDataMessage: "Nenhum atendente cadastrado",
     actions: {
       columnTitle: "",
-      add: false,
+      add: true,
     },
     attr: {
       class: 'table table-bordered'
@@ -94,6 +94,7 @@ export class AtendenteComponent implements OnInit {
   }
 
   oncreateConfirm(event) {
+    console.log(event.data);
     this.atendenteService.CreateAtendentes(event.newData);
     event.confirm.resolve(event.newData);
   }

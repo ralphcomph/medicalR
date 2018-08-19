@@ -3,7 +3,7 @@
         <div class="col-md-4">            
             <span ><i class="fa fa-hospital-o fa-5x"></i></span>
             <h1> Medical R </h1>
-            <form role="form" [formGroup]="formLogin">
+            <form role="form" [formGroup]="formRegister">
                 <div class="form-content">
                     <div class="form-group">
                         <input 
@@ -13,7 +13,7 @@
                         id="nome"
                         formControlName="nome"
                         >
-                        <small *ngIf="!formLogin.get('nome').valid && formLogin.get('nome').touched" class="form-text text-danger">Nome deve conter no mín. 3 e no máx. 40</small>
+                        <small *ngIf="!formRegister.get('nome').valid && formRegister.get('nome').touched" class="form-text text-danger">Nome deve conter no mín. 3 e no máx. 40</small>
                     </div>
 
                     <div class="form-group">
@@ -24,7 +24,7 @@
                         id="email"
                         formControlName="email"
                         >
-                        <small *ngIf="!formLogin.get('email').valid && formLogin.get('email').touched" class="form-text text-danger">E-mail inválido</small>
+                        <small *ngIf="!formRegister.get('email').valid && formRegister.get('email').touched" class="form-text text-danger">E-mail inválido</small>
                     </div>
 
                     <div class="form-group">
@@ -32,12 +32,13 @@
                           class="form-control"
                           formControlName="perfil"
                         >
-                          <option value="">Indefinido</option>                   
+                          <option value="">Selecione</option>  
+                          <option value="Administrador">Administrador</option>                 
                           <option value="Atendente">Atendente</option>
                           <option value="Paciente">Paciente</option>
                           <option value="Médico">Médico</option>
                         </select>                      
-                        <small *ngIf="!formLogin.get('perfil').valid && formLogin.get('perfil').touched" class="form-text text-danger">Perfil inválido</small>
+                        <small *ngIf="!formRegister.get('perfil').valid && formRegister.get('perfil').touched" class="form-text text-danger">Perfil inválido</small>
                       </div>
 
                     <div class="form-group">
@@ -48,7 +49,7 @@
                         id="senha"
                         formControlName="senha"
                         >
-                        <small *ngIf="!formLogin.get('senha').valid && formLogin.get('senha').touched" class="form-text text-danger">Senha deve conter 6 caracteres</small>                        
+                        <small *ngIf="!formRegister.get('senha').valid && formRegister.get('senha').touched" class="form-text text-danger">Senha deve conter 6 caracteres</small>                        
                     </div>
                     
                     <div class="form-group">
@@ -59,10 +60,18 @@
                         id="confirmasenha"
                         formControlName="confirmasenha"
                         >
-                        <small *ngIf="!formLogin.get('confirmasenha').valid && formLogin.get('confirmasenha').touched" class="form-text text-danger">Senha deve conter 6 caracteres</small>                                                
+                        <small *ngIf="!formRegister.get('confirmasenha').valid && formRegister.get('confirmasenha').touched" class="form-text text-danger">Senha deve conter 6 caracteres</small>                                                
                     </div>                   
                 </div>
-                <a class="btn rounded-btn" (click)="validaUsuario()"> Registrar </a>&nbsp;
+                
+                <div class="alert alert-warning alert-dismissible fade show" *ngIf="feedbackmessage !== undefined" role="alert">
+                    <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                 </div>               
+                  
+                <a class="btn rounded-btn" (click)="RegistrarUsuario()"> Registrar </a>&nbsp;
                 <a class="btn rounded-btn" [routerLink]="['/login']"> Voltar </a>
             </form>
         </div>

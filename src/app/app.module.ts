@@ -12,6 +12,7 @@ import { AuthGuard } from './shared';
 import { FormsModule } from '@angular/forms'
 import { ReactiveFormsModule } from '@angular/forms';
 
+
 // AoT requires an exported function for factories
 export const createTranslateLoader = (http: HttpClient) => {
     /* for development
@@ -26,7 +27,7 @@ export const createTranslateLoader = (http: HttpClient) => {
 @NgModule({
     imports: [
         CommonModule,
-        BrowserModule,
+        BrowserModule,     
         BrowserAnimationsModule,
         HttpClientModule,
         TranslateModule.forRoot({

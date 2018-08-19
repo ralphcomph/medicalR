@@ -138,8 +138,7 @@ export class UsuarioComponent implements OnInit {
     event.confirm.resolve(event.newData);
   }
 
-  ondeleteConfirm(event) {
-    console.log(event.data);
+  ondeleteConfirm(event) {   
     if (window.confirm('Tem certeza que deseja excluir o usuário ' + event.data.id + ' ?')) {
       this.usuarioService.DeleteUsuarios(event.data)
         .subscribe(() => {

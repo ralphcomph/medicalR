@@ -1,24 +1,32 @@
-import { Http, RequestOptions, Headers, Response } from '@angular/http'
 import { Usuario } from '../models/usuario.model'
-import { Injectable } from '@angular/core'
+import * as firebase from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/database'
 
-import { URL_API } from '../apis/api'
-import 'rxjs/add/operator/map'
+export class AutenticacaoService {
 
+    private msnerror: string = "OK"
 
-@Injectable()
-export class AutenticacaoService {  
-   
-    constructor(private http: Http){}
+    public RegistrarUsuario(usuario: Usuario): string {
 
-    public RegistrarUsuario(usuario: Usuario) : void {              
-        let headers: Headers = new Headers()
-        headers.append('Content-type', 'application/json')
-         this.http.post(
-            `${URL_API}/usuarios/`,
-            JSON.stringify(usuario),
-            new RequestOptions({ headers: headers })
-        )
-        .map((resposta: Response) => resposta.json().id)                    
+        firebase.auth().createUserWithEmailAndPassword(usuario.email, usuario.senha)
+            .then((resp: any) => {
+                delete usuario.senha
+                firebase.database().ref(`usuarios_info/${btoa(usuario.email)}`)
+                    .set(usuario)
+            })
+            .catch((error: firebase.auth.Error) => {
+                switch (error.code) {
+                    case "auth/email-already-in-use": {
+                        this.msnerror = "O e-mail fornecido já está em uso por outro usuário!"
+                        break;
+                    }
+                    default: {
+                        this.msnerror = "Erro ao tentar registrar usuário!"
+                        break;
+                    }
+                }
+            })
+        return this.msnerror;
     }
 }

@@ -13,14 +13,10 @@ export class PerfilService {
     
     constructor(private http: Http){}
     
-    public SelectPerfil(): Promise<Perfil[]> {
-        console.log("chegamos aqui")               
+    public SelectPerfil(): Promise<Perfil[]> {                     
         return this.http.get(`${URL_API}/perfil`)
             .toPromise()
             .then((resp: Response) => resp.json())             
     }  
-
-    public Teste(): void {
-        console.log("chegamos aqui")  
-    }
+  
 }

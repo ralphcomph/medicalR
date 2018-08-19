@@ -2,11 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../router.animations';
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 
-//import { UsuarioService } from '../shared/services/usuario.service'
-//import { Usuario } from '../shared/models/usuario.model'
-//import { PerfilService } from '../shared/services/perfil.service'
-//import { Perfil } from '../shared/models/perfil.model'
-
 import { AutenticacaoService } from '../shared/services/autenticacao.service'
 import { Usuario } from '../shared/models/usuario.model';
 
@@ -21,7 +16,7 @@ export class SignupComponent implements OnInit {
     
     private usuarioId: number   
 
-    public formLogin: FormGroup = new FormGroup({
+    public formRegister: FormGroup = new FormGroup({
         'nome': new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(40)]),
         'email': new FormControl(null, [Validators.required, Validators.email, Validators.maxLength(40)]),
         'perfil': new FormControl(null, [Validators.required]),
@@ -30,52 +25,40 @@ export class SignupComponent implements OnInit {
     })
 
     constructor(
-        private autenticacaoService: AutenticacaoService
-        //private usuarioService: UsuarioService,
-        //private perfilService: PerfilService
-               
+        private autenticacaoService: AutenticacaoService  
     ) { }  
 
-    ngOnInit() {    
+    ngOnInit() { }
 
-        //this.perfilService.SelectPerfil()
-        //.then((perfil: Perfil[]) => {
-        // console.log(perfil)  
-        //})  
-        
-        //this.usuarioService.SelectUsuarios()
-        //.then((usuario: Usuario[]) => {
-        // console.log(usuario)  
-        //}) 
-    }
+    public RegistrarUsuario(): void {
+        if (this.formRegister.status === 'INVALID') {     
+            this.formRegister.get('nome').markAsTouched()
+            this.formRegister.get('email').markAsTouched()
+            this.formRegister.get('perfil').markAsTouched()
+            this.formRegister.get('senha').markAsTouched()
+            this.formRegister.get('confirmasenha').markAsTouched()
 
-    public validaUsuario(): void {
-        if (this.formLogin.status === 'INVALID') {
-            console.log('formulário está inválido')
-
-            this.formLogin.get('nome').markAsTouched()
-            this.formLogin.get('email').markAsTouched()
-            this.formLogin.get('perfil').markAsTouched()
-            this.formLogin.get('senha').markAsTouched()
-            this.formLogin.get('confirmasenha').markAsTouched()
-
-        } else {          
-
+        } else {    
             let usuario: Usuario = new Usuario(
                 null,
-                this.formLogin.value.perfil,
-                this.formLogin.value.nome,
-                this.formLogin.value.email,
-                this.formLogin.value.senha
+                this.formRegister.value.perfil,
+                this.formRegister.value.nome,
+                this.formRegister.value.email,
+                this.formRegister.value.senha
             )
 
-            this.autenticacaoService.RegistrarUsuario(usuario);
+           let feedbackmessage = this.autenticacaoService.RegistrarUsuario(usuario);  
+           console.log("feedbackmessage",feedbackmessage);
 
-
-           /* this.usuarioService.CreateUsuarios(usuario, 0)
-                .subscribe((id: number) => {
-                    this.usuarioId = id
-                }) */
+           if(feedbackmessage !== "OK")
+           {
+            //console.log(feedbackmessage)
+           }
+           else
+           {
+            this.formRegister.reset();  
+           }
+                  
         }
     }
 }

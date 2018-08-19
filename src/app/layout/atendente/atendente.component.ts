@@ -93,8 +93,7 @@ export class AtendenteComponent implements OnInit {
     }
   }
 
-  oncreateConfirm(event) {
-    console.log(event.data);
+  oncreateConfirm(event) {  
     this.atendenteService.CreateAtendentes(event.newData);
     event.confirm.resolve(event.newData);
   }
@@ -107,8 +106,7 @@ export class AtendenteComponent implements OnInit {
     event.confirm.resolve(event.newData);
   }
 
-  ondeleteConfirm(event) {
-    console.log(event.data);
+  ondeleteConfirm(event) { 
     if (window.confirm('Tem certeza que deseja excluir o atendente ' + event.data.id + '?')) {
       this.atendenteService.DeleteAtendentes(event.data)
         .subscribe(() => {

@@ -62,14 +62,11 @@
                         >
                         <small *ngIf="!formRegister.get('confirmasenha').valid && formRegister.get('confirmasenha').touched" class="form-text text-danger">Senha deve conter 6 caracteres</small>                                                
                     </div>                   
-                </div>
+                </div>   
                 
-                <div class="alert alert-warning alert-dismissible fade show" *ngIf="feedbackmessage !== undefined" role="alert">
-                    <strong>Holy guacamole!</strong> You should check in on some of those fields below.
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                 </div>               
+                <div class="alert alert-danger" *ngIf="msnerror !== undefined" role="alert">
+                        {{msnerror}}
+                 </div>
                   
                 <a class="btn rounded-btn" (click)="RegistrarUsuario()"> Registrar </a>&nbsp;
                 <a class="btn rounded-btn" [routerLink]="['/login']"> Voltar </a>

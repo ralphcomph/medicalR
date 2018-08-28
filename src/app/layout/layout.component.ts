@@ -1,12 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 
+import * as firebase from 'firebase/app'
+import 'firebase/auth'
+
 @Component({
     selector: 'app-layout',
     templateUrl: './layout.component.html',
     styleUrls: ['./layout.component.scss']
 })
 export class LayoutComponent implements OnInit {
-    constructor() {}
+    
+    public UsuarioLogado : string
 
-    ngOnInit() {}
+    constructor() {}   
+    
+    ngOnInit() {
+        let user = firebase.auth().currentUser;
+        this.UsuarioLogado = user.email;            
+    }
 }

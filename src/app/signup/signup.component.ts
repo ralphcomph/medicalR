@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../router.animations';
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 
-import { AutenticacaoService } from '../shared/services/autenticacao.service'
 import { Usuario } from '../shared/models/usuario.model';
 import { Router } from '@angular/router';
 
@@ -13,8 +12,7 @@ import 'firebase/database'
 @Component({
     selector: 'app-signup',
     templateUrl: './signup.component.html',
-    styleUrls: ['./signup.component.scss'],
-    providers: [AutenticacaoService],
+    styleUrls: ['./signup.component.scss'],  
     animations: [routerTransition()]
 })
 export class SignupComponent implements OnInit {
@@ -30,8 +28,7 @@ export class SignupComponent implements OnInit {
         'confirmasenha': new FormControl(null, [Validators.required, Validators.minLength(6), Validators.maxLength(6)])
     })
 
-    constructor(
-        private autenticacaoService: AutenticacaoService,
+    constructor(      
         private router: Router
     ) { }
 
@@ -74,8 +71,7 @@ export class SignupComponent implements OnInit {
                         break;
                     }
                 }
-            })        
-
+            })  
         }
     }
 }

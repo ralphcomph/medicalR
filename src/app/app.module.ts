@@ -13,6 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import {AngularFireModule} from 'angularfire2';
 import {AngularFireAuthModule} from 'angularfire2/auth';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 import {environment} from '../environments/environment';
 
@@ -47,6 +48,7 @@ export const createTranslateLoader = (http: HttpClient) => {
         FormsModule,
         ReactiveFormsModule,
         AngularFireAuthModule,
+        AngularFireDatabaseModule,
         AngularFireModule.initializeApp(environment.firebaseConfig)               
     ],
     declarations: [AppComponent],

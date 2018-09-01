@@ -17,91 +17,14 @@
       "descricao": "Médico"
     }
   ],
-  "usuarios": [
+  "usuarios": [  
     {
       "id": 1,
       "perfil": "Administrador",
       "nome": "RALPH",
       "email": "teste",
       "senha": "111"
-    },
-    {
-      "id": 2,
-      "perfil": "Atendente",
-      "nome": "JAQUELINE",
-      "email": "teste",
-      "senha": "222"
-    },
-    {
-      "id": 3,
-      "perfil": "Paciente",
-      "nome": "JOÃO",
-      "email": "teste",
-      "senha": "333"
-    },
-    {
-      "id": 5,
-      "perfil": "Médico",
-      "nome": "MÁRCIO",
-      "email": "teste",
-      "senha": "555"
-    },
-    {
-      "id": 6,
-      "perfil": "Paciente",
-      "nome": "JOSÉ",
-      "email": "teste",
-      "senha": "777"
-    },
-    {
-      "id": 7,
-      "perfil": "Médico",
-      "nome": "MAURO",
-      "email": "teste",
-      "senha": "888"
-    },
-    {
-      "id": 8,
-      "perfil": "Paciente",
-      "nome": "MARA",
-      "email": "dd",
-      "senha": "111"
-    },
-    {
-      "id": 9,
-      "perfil": "Atendente",
-      "nome": "VERA",
-      "email": "www",
-      "senha": "222"
-    },
-    {
-      "id": 10,
-      "perfil": "Paciente",
-      "nome": "HELENA",
-      "email": "qqq",
-      "senha": "444"
-    },
-    {
-      "id": 11,
-      "perfil": "Paciente",
-      "nome": "EDUARDO",
-      "email": "ttt",
-      "senha": "555"
-    },
-    {
-      "id": 12,
-      "perfil": "Paciente",
-      "nome": "CARLOS",
-      "email": "yyy",
-      "senha": "777"
-    },
-    {
-      "id": 13,
-      "perfil": "Paciente",
-      "nome": "ANDRÉ",
-      "email": "vvv",
-      "senha": "888"
-    }
+    } 
   ],
   "especialidades": [
     {
@@ -123,7 +46,7 @@
     {
       "id": 5,
       "descricao": "Ginecologista"
-    }     
+    }
   ],
   "tiposexames": [
     {
@@ -145,20 +68,13 @@
     {
       "id": 5,
       "descricao": "Parasitológico"
-    }      
+    }
   ],
-  "exames": [       
-  ],
-  "atendentes": [   
-  ],
-  "medicos": [   
-  ],
-  "remedios": [   
-  ],
-  "pacientes": [   
-  ], 
-  "consultas": [   
-  ],
-  "consultasanexos": [   
-  ]
+  "exames": [],
+  "atendentes": [],
+  "medicos": [],
+  "remedios": [],
+  "pacientes": [],
+  "consultas": [],
+  "consultasanexos": []
 }

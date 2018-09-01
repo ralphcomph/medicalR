@@ -5,7 +5,7 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { UsuarioService } from '../../shared/services/usuario.service'
 import { Usuario } from '../../shared/models/usuario.model'
 import { PerfilService } from '../../shared/services/perfil.service'
-import { Perfil } from '../../shared/models/perfil.model'
+//import { Perfil } from '../../shared/models/perfil.model'
 
 @Component({
   selector: 'app-usuario',
@@ -15,14 +15,10 @@ import { Perfil } from '../../shared/models/perfil.model'
   animations: [routerTransition()]
 })
 
-//type Fil = { value: string; title: string };
-
 export class UsuarioComponent implements OnInit {
-
-  public perfil_data: Perfil[];
+  
   public usuarioId: number;
-
-  //public fil_data: Fil[];
+  usuarioList: Usuario[];  
 
   settings = {
     mode: 'inline',
@@ -42,6 +38,10 @@ export class UsuarioComponent implements OnInit {
         filter: false,
         editable: false,
         addable: false,
+      },
+      nome: {
+        title: 'Nome',
+        filter: false,
       },
       perfil: {
         title: 'Perfil',
@@ -70,11 +70,7 @@ export class UsuarioComponent implements OnInit {
             ],
           },
         },
-      },
-      nome: {
-        title: 'Nome',
-        filter: false,
-      }
+      }    
     },
     add: {
       addButtonContent: '<i class="fa fa-plus-square fa-3x"></i>',
@@ -138,7 +134,7 @@ export class UsuarioComponent implements OnInit {
     event.confirm.resolve(event.newData);
   }
 
-  ondeleteConfirm(event) {   
+  ondeleteConfirm(event) {
     if (window.confirm('Tem certeza que deseja excluir o usuário ' + event.data.id + ' ?')) {
       this.usuarioService.DeleteUsuarios(event.data)
         .subscribe(() => {
@@ -149,21 +145,27 @@ export class UsuarioComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
+  ngOnInit() {  
 
-    //this.fil_data.push({value : "1" , title : "teste 1"});
-    //this.fil_data.push({value : "2" , title : "teste 2"});
-    //this.fil_data.push({value : "3" , title : "teste 3"});  
+    var x = this.usuarioService.getData();
+    x.snapshotChanges().subscribe(item => {
+      this.usuarioList = [];
+      item.forEach(element => {
+        var data = element.payload.toJSON();
+       
+        data["$key"] = element.key;       
 
-    //this.perfilService.SelectPerfil()
-    //  .then((perfil: Perfil[]) => {
-    //     this.perfil_data = perfil 
-    //    console.log(this.perfil_data)
-    //  })  
-
-    this.usuarioService.SelectUsuarios()
-      .then((usuario: Usuario[]) => {
-        this.source.load(usuario)
-      })
+        let usuario: Usuario = new Usuario(
+          data["$key"],
+          data["perfil"],
+          data["nome"],
+          data["email"],
+          data["senha"]
+      )    
+      this.usuarioList.push(usuario) 
+      }); 
+    
+      this.source.load(this.usuarioList)
+    });   
   }
 }

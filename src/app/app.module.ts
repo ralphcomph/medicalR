@@ -8,10 +8,16 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AuthGuard } from './shared';
 import { FormsModule } from '@angular/forms'
 import { ReactiveFormsModule } from '@angular/forms';
 
+import {AngularFireModule} from 'angularfire2';
+import {AngularFireAuthModule} from 'angularfire2/auth';
+
+import {environment} from '../environments/environment';
+
+import { AutenticacaoService } from './shared/services/autenticacao.service'
+import { AuthGuard } from './shared';
 
 // AoT requires an exported function for factories
 export const createTranslateLoader = (http: HttpClient) => {
@@ -39,10 +45,12 @@ export const createTranslateLoader = (http: HttpClient) => {
         }),       
         AppRoutingModule,
         FormsModule,
-        ReactiveFormsModule                   
+        ReactiveFormsModule,
+        AngularFireAuthModule,
+        AngularFireModule.initializeApp(environment.firebaseConfig)               
     ],
     declarations: [AppComponent],
-    providers: [AuthGuard],
+    providers: [AuthGuard, AutenticacaoService],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

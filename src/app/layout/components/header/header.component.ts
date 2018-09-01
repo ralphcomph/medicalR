@@ -1,9 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
-import * as firebase from 'firebase/app'
-import 'firebase/auth'
+import { AutenticacaoService } from '../../../shared/services/autenticacao.service'
 
 @Component({
     selector: 'app-header',
@@ -12,10 +11,13 @@ import 'firebase/auth'
 })
 export class HeaderComponent implements OnInit {
     pushRightClass: string = 'push-right';
-    
-    @Input() public UsuarioLogado: string = "Desconhecido"   
-    
-    constructor(private translate: TranslateService, public router: Router) {
+
+    private UsuarioLogado: string;
+
+    constructor(
+        private translate: TranslateService,
+        public router: Router,
+        public autenticacaoService: AutenticacaoService) {
 
         this.translate.addLangs(['en', 'fr', 'ur', 'es', 'it', 'fa', 'de', 'zh-CHS']);
         this.translate.setDefaultLang('en');
@@ -30,10 +32,17 @@ export class HeaderComponent implements OnInit {
             ) {
                 this.toggleSidebar();
             }
-        });      
+        });
     }
 
-    ngOnInit() { }
+    ngOnInit() {
+        this.autenticacaoService.getAuth().subscribe(auth => {
+            if (auth) {
+                this.UsuarioLogado = auth.email;
+            } else {
+            }
+        });
+    }
 
     isToggled(): boolean {
         const dom: Element = document.querySelector('body');
@@ -51,7 +60,7 @@ export class HeaderComponent implements OnInit {
     }
 
     onLoggedout() {
-        firebase.auth().signOut();
+        this.autenticacaoService.logout();
         localStorage.removeItem('isLoggedin');
     }
 

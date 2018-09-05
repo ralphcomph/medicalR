@@ -18,6 +18,8 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import {environment} from '../environments/environment';
 
 import { AutenticacaoService } from './shared/services/autenticacao.service'
+import { UsuarioService } from './shared/services/usuario.service'
+
 import { AuthGuard } from './shared';
 
 // AoT requires an exported function for factories
@@ -52,7 +54,7 @@ export const createTranslateLoader = (http: HttpClient) => {
         AngularFireModule.initializeApp(environment.firebaseConfig)               
     ],
     declarations: [AppComponent],
-    providers: [AuthGuard, AutenticacaoService],
+    providers: [AuthGuard, AutenticacaoService, UsuarioService],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

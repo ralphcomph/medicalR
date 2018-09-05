@@ -7,6 +7,9 @@ import { Usuario } from '../../shared/models/usuario.model'
 import { PerfilService } from '../../shared/services/perfil.service'
 //import { Perfil } from '../../shared/models/perfil.model'
 
+import { AutenticacaoService } from '../../shared/services/autenticacao.service'
+import { AngularFireDatabase } from 'angularfire2/database'
+
 @Component({
   selector: 'app-usuario',
   templateUrl: './usuario.component.html',
@@ -16,9 +19,9 @@ import { PerfilService } from '../../shared/services/perfil.service'
 })
 
 export class UsuarioComponent implements OnInit {
-  
+
   public usuarioId: number;
-  usuarioList: Usuario[];  
+  usuarioList: Usuario[];
 
   settings = {
     mode: 'inline',
@@ -28,6 +31,7 @@ export class UsuarioComponent implements OnInit {
     actions: {
       columnTitle: "",
       add: false,
+      delete: false,
     },
     attr: {
       class: 'table table-bordered'
@@ -35,6 +39,12 @@ export class UsuarioComponent implements OnInit {
     columns: {
       id: {
         title: 'ID',
+        filter: false,
+        editable: false,
+        addable: false,
+      },
+      email: {
+        title: 'E-mail',
         filter: false,
         editable: false,
         addable: false,
@@ -70,31 +80,25 @@ export class UsuarioComponent implements OnInit {
             ],
           },
         },
-      }    
-    },
-    add: {
-      addButtonContent: '<i class="fa fa-plus-square fa-3x"></i>',
-      createButtonContent: '<i class="fa fa-floppy-o">&nbsp;&nbsp;</i>',
-      cancelButtonContent: '<i class="fa fa-ban"></i>',
-      confirmCreate: true,
+      }
     },
     edit: {
       editButtonContent: '<i class="fa fa-pencil-square">&nbsp;&nbsp;</i>',
       saveButtonContent: '<i class="fa fa-floppy-o">&nbsp;&nbsp;</i>',
-      cancelButtonContent: '<i class="fa fa-ban"></i>',
+      cancelButtonContent: '<i class="fa fa-undo"></i>',
       confirmSave: true,
-    },
-    delete: {
-      deleteButtonContent: '<i class="fa fa-trash">&nbsp;&nbsp;</i>',
-      confirmDelete: true,
     },
   };
 
-  source: LocalDataSource;
+  private source: LocalDataSource;
+  private UsuarioLogado: string;
+  private PerfilLogado: string;
 
   constructor(
     private usuarioService: UsuarioService,
-    private perfilService: PerfilService
+    private perfilService: PerfilService,
+    private firebase: AngularFireDatabase,
+    private autenticacaoService: AutenticacaoService
   ) {
     this.source = new LocalDataSource();
   }
@@ -110,6 +114,10 @@ export class UsuarioComponent implements OnInit {
           search: query
         },
         {
+          field: 'email',
+          search: query
+        },
+        {
           field: 'nome',
           search: query
         },
@@ -121,39 +129,39 @@ export class UsuarioComponent implements OnInit {
     }
   }
 
-  oncreateConfirm(event) {
-    this.usuarioService.CreateUsuarios(event.newData);
-    event.confirm.resolve(event.newData);
-  }
-
   oneditConfirm(event) {
-    this.usuarioService.UpdateUsuarios(event.newData)
-      .subscribe((id: number) => {
-        this.usuarioId = id
-      })
+    console.log(this.PerfilLogado);
+    if (this.PerfilLogado !== "Administrador") {
+      alert("Acesso negado!");    
+    }else {    
+    this.usuarioService.updateUsuario(event.newData)
     event.confirm.resolve(event.newData);
-  }
-
-  ondeleteConfirm(event) {
-    if (window.confirm('Tem certeza que deseja excluir o usuário ' + event.data.id + ' ?')) {
-      this.usuarioService.DeleteUsuarios(event.data)
-        .subscribe(() => {
-        })
-      event.confirm.resolve(event.data);
-    } else {
-      event.confirm.reject();
     }
   }
 
-  ngOnInit() {  
+  ngOnInit() {
+
+    this.autenticacaoService.getAuth().subscribe(auth => {
+      if (auth) {
+        this.UsuarioLogado = auth.email;
+
+        let subscribe = this.firebase.object(`usuarios_info/${btoa(auth.email)}`).valueChanges().subscribe(
+          data => {
+            this.PerfilLogado = data["perfil"];
+            console.log("PerfilLogado", this.PerfilLogado)
+          }
+        );
+      } else {
+      }
+    });
 
     var x = this.usuarioService.getData();
     x.snapshotChanges().subscribe(item => {
       this.usuarioList = [];
       item.forEach(element => {
         var data = element.payload.toJSON();
-       
-        data["$key"] = element.key;       
+
+        data["$key"] = element.key;
 
         let usuario: Usuario = new Usuario(
           data["$key"],
@@ -161,11 +169,11 @@ export class UsuarioComponent implements OnInit {
           data["nome"],
           data["email"],
           data["senha"]
-      )    
-      this.usuarioList.push(usuario) 
-      }); 
-    
+        )
+        this.usuarioList.push(usuario)
+      });
+
       this.source.load(this.usuarioList)
-    });   
+    });
   }
 }

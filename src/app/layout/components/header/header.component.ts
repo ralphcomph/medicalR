@@ -3,6 +3,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
 import { AutenticacaoService } from '../../../shared/services/autenticacao.service'
+import { AngularFireDatabase } from 'angularfire2/database'
 
 @Component({
     selector: 'app-header',
@@ -13,11 +14,13 @@ export class HeaderComponent implements OnInit {
     pushRightClass: string = 'push-right';
 
     private UsuarioLogado: string;
+    private PerfilLogado: string;
 
-    constructor(
+    constructor(       
         private translate: TranslateService,
-        public router: Router,
-        public autenticacaoService: AutenticacaoService) {
+        private router: Router,
+        private firebase: AngularFireDatabase,
+        private autenticacaoService: AutenticacaoService) {
 
         this.translate.addLangs(['en', 'fr', 'ur', 'es', 'it', 'fa', 'de', 'zh-CHS']);
         this.translate.setDefaultLang('en');
@@ -39,9 +42,16 @@ export class HeaderComponent implements OnInit {
         this.autenticacaoService.getAuth().subscribe(auth => {
             if (auth) {
                 this.UsuarioLogado = auth.email;
+                
+                let subscribe = this.firebase.object(`usuarios_info/${btoa(auth.email)}`).valueChanges().subscribe(
+                    data =>{                                           
+                       this.PerfilLogado = data["perfil"];                    
+                       console.log("PerfilLogado",this.PerfilLogado)                     
+                    }
+                 );
             } else {
             }
-        });
+        }); 
     }
 
     isToggled(): boolean {

@@ -1,7 +1,7 @@
 export class Atendente {
     constructor(
-        public id: number,       
-        public nome: string,      
-        public ctps: string      
+        public id: number,
+        public ctps: string,       
+        public nome: string 
     ) { }
 }

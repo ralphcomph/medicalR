@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
+import { AutenticacaoService } from '../../../shared/services/autenticacao.service'
+import { AngularFireDatabase } from 'angularfire2/database'
+
 @Component({
     selector: 'app-sidebar',
     templateUrl: './sidebar.component.html',
@@ -10,9 +13,20 @@ import { TranslateService } from '@ngx-translate/core';
 export class SidebarComponent {
     isActive: boolean = false;
     showMenu: string = '';
-    pushRightClass: string = 'push-right';
+    pushRightClass: string = 'push-right';       
 
-    constructor(private translate: TranslateService, public router: Router) {
+    private UsuarioRole: boolean = false;
+    private AtendenteRole: boolean = false;
+    private PacienteRole: boolean = false;
+    private MedicoRole: boolean = false;
+    private RemedioRole: boolean = false;
+    private ConsultaRole: boolean = false;
+
+    constructor(
+        private translate: TranslateService,
+        public router: Router,
+        private firebase: AngularFireDatabase,
+        private autenticacaoService: AutenticacaoService) {
         this.translate.addLangs(['en', 'fr', 'ur', 'es', 'it', 'fa', 'de']);
         this.translate.setDefaultLang('en');
         const browserLang = this.translate.getBrowserLang();
@@ -27,6 +41,46 @@ export class SidebarComponent {
                 this.toggleSidebar();
             }
         });
+    }
+
+    ngOnInit() {  
+        this.autenticacaoService.getAuth().subscribe(auth => {
+            if (auth) {               
+                let subscribe = this.firebase.object(`usuarios_info/${btoa(auth.email)}`).valueChanges().subscribe(
+                    data => {     
+                        switch (data["perfil"]) {
+                            case "Administrador": {
+                                this.UsuarioRole = true;
+                                this.AtendenteRole = true;
+                                this.PacienteRole = true;
+                                this.MedicoRole = true;
+                                this.RemedioRole = true;
+                                this.ConsultaRole = true;
+                                break;
+                            }
+                            case "Atendente": {
+                                this.PacienteRole = true;
+                                this.ConsultaRole = true;
+                                break;
+                            }
+                            case "Paciente": {
+                                this.ConsultaRole = true;
+                                break;
+                            }
+                            case "Médico": {
+                                this.RemedioRole = true;
+                                this.ConsultaRole = true;
+                                break;
+                            }
+                            default: {
+                                break;
+                            }
+                        }  
+                    }
+                );
+            } else {
+            }
+        });       
     }
 
     eventCalled() {

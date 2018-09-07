@@ -17,14 +17,14 @@
       "descricao": "Médico"
     }
   ],
-  "usuarios": [  
+  "usuarios": [
     {
       "id": 1,
       "perfil": "Administrador",
       "nome": "RALPH",
       "email": "teste",
       "senha": "111"
-    } 
+    }
   ],
   "especialidades": [
     {
@@ -71,7 +71,18 @@
     }
   ],
   "exames": [],
-  "atendentes": [],
+  "atendentes": [
+    {
+      "id": 1,
+      "ctps": "12345678912",
+      "nome": "Robson"
+    },
+    {
+      "id": 2,
+      "ctps": "09876543210",
+      "nome": "Willian"
+    }
+  ],
   "medicos": [],
   "remedios": [],
   "pacientes": [],

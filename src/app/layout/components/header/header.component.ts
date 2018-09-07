@@ -3,7 +3,6 @@ import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
 import { AutenticacaoService } from '../../../shared/services/autenticacao.service'
-import { AngularFireDatabase } from 'angularfire2/database'
 
 @Component({
     selector: 'app-header',
@@ -13,13 +12,11 @@ import { AngularFireDatabase } from 'angularfire2/database'
 export class HeaderComponent implements OnInit {
     pushRightClass: string = 'push-right';
 
-    private UsuarioLogado: string;
-    private PerfilLogado: string;
+    private UsuarioLogado: string;  
 
     constructor(       
         private translate: TranslateService,
-        private router: Router,
-        private firebase: AngularFireDatabase,
+        private router: Router,       
         private autenticacaoService: AutenticacaoService) {
 
         this.translate.addLangs(['en', 'fr', 'ur', 'es', 'it', 'fa', 'de', 'zh-CHS']);
@@ -41,14 +38,7 @@ export class HeaderComponent implements OnInit {
     ngOnInit() {
         this.autenticacaoService.getAuth().subscribe(auth => {
             if (auth) {
-                this.UsuarioLogado = auth.email;
-                
-                let subscribe = this.firebase.object(`usuarios_info/${btoa(auth.email)}`).valueChanges().subscribe(
-                    data =>{                                           
-                       this.PerfilLogado = data["perfil"];                    
-                       console.log("PerfilLogado",this.PerfilLogado)                     
-                    }
-                 );
+                this.UsuarioLogado = auth.email;    
             } else {
             }
         }); 

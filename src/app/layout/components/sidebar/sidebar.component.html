@@ -2,38 +2,35 @@
     <div class="list-group">
         <a routerLink="/principal" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-hospital-o"></i>&nbsp;Principal
-        </a>  
-
-        <a [routerLink]="['/forms']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-fw fa-edit"></i>&nbsp;Forms
-        </a>        
-        
-        <a [routerLink]="['/usuarios']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        </a>
+      
+        <a *ngIf="UsuarioRole || AdministradorRole" [routerLink]="['/usuarios']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-user"></i>&nbsp;Usuários
-        </a>  
-        
-        <a [routerLink]="['/atendentes']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        </a>
+
+        <a *ngIf="AtendenteRole || AdministradorRole" [routerLink]="['/atendentes']" [routerLinkActive]="['router-link-active']"
+            class="list-group-item">
             <i class="fa fa-bell-o"></i>&nbsp;Atendentes
-        </a> 
+        </a>
 
-        <a [routerLink]="['/pacientes']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <a *ngIf="PacienteRole || AdministradorRole" [routerLink]="['/pacientes']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-address-card-o"></i>&nbsp;Pacientes
-        </a> 
-        
-        <a [routerLink]="['/medico']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-stethoscope"></i>&nbsp;Médicos
-        </a> 
-        
-        <a [routerLink]="['/remedios']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-medkit"></i>&nbsp;Remédios
-        </a>  
-        
-        <a [routerLink]="['/consultas']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-heartbeat"></i>&nbsp;Consultas
-        </a>  
+        </a>
 
-        <a [routerLink]="['/login']" (click)="onLoggedout()" class="list-group-item" >
+        <a *ngIf="MedicoRole || AdministradorRole" [routerLink]="['/medico']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-stethoscope"></i>&nbsp;Médicos
+        </a>
+
+        <a *ngIf="RemedioRole || AdministradorRole" [routerLink]="['/remedios']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-medkit"></i>&nbsp;Remédios
+        </a>
+
+        <a *ngIf="ConsultaRole || AdministradorRole" [routerLink]="['/consultas']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-heartbeat"></i>&nbsp;Consultas
+        </a>
+
+        <a [routerLink]="['/login']" (click)="onLoggedout()" class="list-group-item">
             <i class="fa fa-fw fa-power-off"></i>&nbsp;Sair
-        </a>          
+        </a>
     </div>
 </nav>

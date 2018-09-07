@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../router.animations';
+import { FormGroup, FormControl, Validators } from '@angular/forms'
 
 import { LocalDataSource } from 'ng2-smart-table';
 import { AtendenteService } from '../../shared/services/atendente.service'
@@ -15,41 +16,38 @@ import { Atendente } from '../../shared/models/atendente.model'
 
 export class AtendenteComponent implements OnInit {
 
-  public atendenteId: number; 
+  public newCTPS: string;
+  private feedback: string;
+  private msn: string;
+
+  public formAtendente: FormGroup = new FormGroup({
+    'ctps': new FormControl(null, [Validators.required, Validators.minLength(11), Validators.maxLength(11)]),
+    'nome': new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(40)])
+  })
 
   settings = {
     mode: 'inline',
     hideHeader: false,
-    hideSubHeader: false,
+    hideSubHeader: true,
     noDataMessage: "Nenhum atendente cadastrado",
     actions: {
       columnTitle: "",
-      add: true,
+      add: false,
     },
     attr: {
       class: 'table table-bordered'
     },
     columns: {
-      id: {
-        title: 'ID',
-        filter: false,
-        editable: false,
-        addable: false,
-      },     
-      nome: {
-        title: 'Nome',
-        filter: false,
-      },
       ctps: {
         title: 'CTPS',
         filter: false,
+        editable: false,
+        addable: false,
+      },
+      nome: {
+        title: 'Nome',
+        filter: false,
       }
-    },
-    add: {
-      addButtonContent: '<i class="fa fa-plus-square fa-3x"></i>',
-      createButtonContent: '<i class="fa fa-floppy-o">&nbsp;&nbsp;</i>',
-      cancelButtonContent: '<i class="fa fa-ban"></i>',
-      confirmCreate: true,
     },
     edit: {
       editButtonContent: '<i class="fa fa-pencil-square">&nbsp;&nbsp;</i>',
@@ -66,7 +64,7 @@ export class AtendenteComponent implements OnInit {
   source: LocalDataSource;
 
   constructor(
-    private atendenteService: AtendenteService 
+    private atendenteService: AtendenteService
   ) {
     this.source = new LocalDataSource();
   }
@@ -78,37 +76,42 @@ export class AtendenteComponent implements OnInit {
     else {
       this.source.setFilter([
         {
-          field: 'id',
+          field: 'ctps',
           search: query
         },
         {
           field: 'nome',
-          search: query
-        },
-        {
-          field: 'ctps',
           search: query
         }
       ], false);
     }
   }
 
-  oncreateConfirm(event) {  
-    this.atendenteService.CreateAtendentes(event.newData);
+  oncreateConfirm(event) {
+    this.atendenteService.CreateAtendente(event.newData);
     event.confirm.resolve(event.newData);
   }
 
-  oneditConfirm(event) {
-    this.atendenteService.UpdateAtendentes(event.newData)
-      .subscribe((id: number) => {
-        this.atendenteId = id
-      })
-    event.confirm.resolve(event.newData);
+  oneditConfirm(event) {      
+    if (event.newData["nome"].length < 3 || event.newData["nome"].length > 40) {
+      this.feedback = "danger";
+      this.msn = "Nome atendente deve conter no mín. 3 e no máx. 40 ";
+      setTimeout(() => {
+        this.feedback = null;
+        this.msn = null;
+      }, 3000);
+    } else {
+      this.atendenteService.UpdateAtendente(event.newData)
+        .subscribe((ctps: string) => {
+          this.newCTPS = ctps
+        })
+      event.confirm.resolve(event.newData);
+    }
   }
 
-  ondeleteConfirm(event) { 
-    if (window.confirm('Tem certeza que deseja excluir o atendente ' + event.data.id + '?')) {
-      this.atendenteService.DeleteAtendentes(event.data)
+  ondeleteConfirm(event) {
+    if (window.confirm('Tem certeza que deseja excluir o atendente ' + event.data.ctps + '?')) {
+      this.atendenteService.DeleteAtendente(event.data)
         .subscribe(() => {
         })
       event.confirm.resolve(event.data);
@@ -122,5 +125,62 @@ export class AtendenteComponent implements OnInit {
       .then((atendente: Atendente[]) => {
         this.source.load(atendente)
       })
+  }
+
+  public CriarAtendente(): void {
+    this.atendenteService.SelectAtendenteByCTPS(this.formAtendente.value.ctps)
+      .then((atendente: Atendente[]) => {
+        if (atendente.length > 0) {
+          this.feedback = "danger";
+          this.msn = "CTPS já está cadastrado!";
+          setTimeout(() => {
+            this.feedback = null;
+            this.msn = null;
+          }, 3000);
+        }
+        else {
+          if (isNaN(this.formAtendente.value.ctps)) {
+            this.feedback = "danger";
+            this.msn = "Campo CTPS deve conter somente números!";
+            setTimeout(() => {
+              this.feedback = null;
+              this.msn = null;
+            }, 3000);
+          }
+          else {
+            if (this.formAtendente.status === 'INVALID') {
+              this.formAtendente.get('nome').markAsTouched()
+              this.formAtendente.get('ctps').markAsTouched()
+            } else {
+              let atendente: Atendente = new Atendente(
+                null,
+                this.formAtendente.value.ctps,
+                this.formAtendente.value.nome
+              )
+
+              this.atendenteService.CreateAtendente(atendente)
+                .subscribe((ctps: string) => {
+                  this.feedback = "success";
+                  this.msn = "Atendente " + ctps + " criado com sucesso!";
+                  this.formAtendente.reset();
+
+                  setTimeout(() => {
+                    this.feedback = null;
+                    this.msn = null;
+                  }, 3000);
+
+                  this.atendenteService.SelectAtendentes()
+                    .then((atendente: Atendente[]) => {
+                      this.source.load(atendente)
+                    })
+                })
+            }
+          }
+        }
+      })
+  }
+
+  public CancelarAtendente(): void {
+    this.formAtendente.reset();
   }
 }

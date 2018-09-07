@@ -8,8 +8,7 @@ const routes: Routes = [
         component: LayoutComponent,
         children: [
             { path: '', redirectTo: 'principal' },
-            { path: 'principal', loadChildren: './principal/principal.module#PrincipalModule' },          
-            { path: 'forms', loadChildren: './form/form.module#FormModule' },
+            { path: 'principal', loadChildren: './principal/principal.module#PrincipalModule' },  
             { path: 'usuarios', loadChildren: './usuario/usuario.module#UsuarioModule' },
             { path: 'atendentes', loadChildren: './atendente/atendente.module#AtendenteModule' },
             { path: 'bs-element', loadChildren: './bs-element/bs-element.module#BsElementModule' },           

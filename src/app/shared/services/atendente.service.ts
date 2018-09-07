@@ -22,30 +22,36 @@ export class AtendenteService {
             .toPromise()
             .then((resp: Response) => resp.json())             
     }  
-    
-    public CreateAtendentes(atendente: Atendente): void {       
+
+    public SelectAtendenteByCTPS(ctps : string): Promise<Atendente[]> {              
+        return this.http.get(`${URL_API}/atendentes?ctps=${ctps}`)
+            .toPromise()
+            .then((resp: Response) => resp.json())             
+    }  
+
+    public CreateAtendente(atendente: Atendente): Observable<string> {
         let headers: Headers = new Headers()
         headers.append('Content-type', 'application/json')
-         this.http.post(
-            `${URL_API}/atendentes/`,
+        return this.http.post(
+            `${URL_API}/atendentes`,
             JSON.stringify(atendente),
             new RequestOptions({ headers: headers })
         )
-        .map((resposta: Response) => resposta.json().id)       
+        .map((resposta: Response) => resposta.json().ctps )
     }   
-
-    public UpdateAtendentes(atendente: Atendente): Observable<number> {       
+   
+    public UpdateAtendente(atendente: Atendente): Observable<string> {       
         let headers: Headers = new Headers()
         headers.append('Content-type', 'application/json')
         return this.http.put(
-            `${URL_API}/atendentes/${atendente.id}`,
+            `${URL_API}/atendentes/${atendente.ctps}`,
             JSON.stringify(atendente),
             new RequestOptions({ headers: headers })
         )
         .map((resposta: Response) => resposta.json().id )       
     }   
 
-    public DeleteAtendentes(atendente: Atendente): Observable<null> {       
+    public DeleteAtendente(atendente: Atendente): Observable<null> {       
         let headers: Headers = new Headers()
         headers.append('Content-type', 'application/json')
         return this.http.delete(

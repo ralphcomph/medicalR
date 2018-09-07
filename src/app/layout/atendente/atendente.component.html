@@ -1,7 +1,37 @@
-
 <div [@routerTransition]>
-    <app-page-header [heading]="'Atendentes'" [icon]="'fa-user'"></app-page-header>
-
+    <app-page-header [heading]="'Atendentes'" [icon]="'fa-user'"></app-page-header>    
+    <div class="row">
+        <div class="alert alert-{{feedback}}" *ngIf="msn !== undefined" role="alert">
+            {{msn}}
+        </div>
+    </div>    
+    <hr/>
+    <div class="container">
+        <form role="form" [formGroup]="formAtendente" (ngSubmit)="CriarAtendente()">
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="ctps">CTPS</label>
+                    <input type="text" class="form-control" placeholder="Digite o número CTPS" id="ctps" formControlName="ctps">
+                    <small *ngIf="!formAtendente.get('ctps').valid && formAtendente.get('ctps').touched" class="form-text text-danger">CTPS
+                        deve conter 11 números</small>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="nome">Nome</label>
+                    <input type="text" class="form-control" placeholder="Digite o nome" id="nome" formControlName="nome">
+                    <small *ngIf="!formAtendente.get('nome').valid && formAtendente.get('nome').touched" class="form-text text-danger">Nome
+                        atendente deve conter no mín. 3 e no máx. 40</small>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary">Criar</button>
+                    <a (click)="CancelarAtendente()" class="btn btn-default">Cancelar</a>
+                </div>
+            </div>           
+        </form>
+    </div>
+    <hr/>
+    <br/>
     <div class="container">
         <div class="row">
             <div class="col-sm">
@@ -10,14 +40,10 @@
         </div>
     </div>
     <br>
-  
     <div class="container">
         <div class="row">
             <div class="col-sm">
-                <ng2-smart-table [settings]="settings" [source]="source" 
-                   (createConfirm)="oncreateConfirm($event)" 
-                   (editConfirm)="oneditConfirm($event)"
-                   (deleteConfirm)="ondeleteConfirm($event)">
+                <ng2-smart-table [settings]="settings" [source]="source" (editConfirm)="oneditConfirm($event)" (deleteConfirm)="ondeleteConfirm($event)">
                 </ng2-smart-table>
             </div>
         </div>

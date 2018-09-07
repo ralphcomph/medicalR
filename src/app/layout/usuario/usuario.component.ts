@@ -129,8 +129,7 @@ export class UsuarioComponent implements OnInit {
     }
   }
 
-  oneditConfirm(event) {
-    console.log(this.PerfilLogado);
+  oneditConfirm(event) {   
     if (this.PerfilLogado !== "Administrador") {
       alert("Acesso negado!");    
     }else {    
@@ -147,8 +146,7 @@ export class UsuarioComponent implements OnInit {
 
         let subscribe = this.firebase.object(`usuarios_info/${btoa(auth.email)}`).valueChanges().subscribe(
           data => {
-            this.PerfilLogado = data["perfil"];
-            console.log("PerfilLogado", this.PerfilLogado)
+            this.PerfilLogado = data["perfil"];           
           }
         );
       } else {

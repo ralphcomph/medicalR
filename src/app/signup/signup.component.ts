@@ -17,8 +17,8 @@ import 'firebase/database'
 })
 export class SignupComponent implements OnInit {
 
-    private usuarioId: number
-    private msnerror: string
+    private usuarioId: number;
+    private msnerror: string;
 
     public formRegister: FormGroup = new FormGroup({
         'nome': new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(40)]),

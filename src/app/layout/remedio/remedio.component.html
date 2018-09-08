@@ -1,0 +1,45 @@
+<div [@routerTransition]>
+    <app-page-header [heading]="'Remédios'" [icon]="'fa fa-medkit'"></app-page-header>    
+    <div class="row">
+        <div class="alert alert-{{feedback}}" *ngIf="msn !== undefined" role="alert">
+            {{msn}}
+        </div>
+    </div>    
+    <hr/>
+    <div class="container">
+        <form role="form" [formGroup]="formRemedio" (ngSubmit)="CriarRemedio()">
+            <div class="row">                
+                <div class="form-group col-md-4">
+                    <label for="nome">Nome</label>
+                    <input type="text" class="form-control" placeholder="Digite o nome" id="nome" formControlName="nome">
+                    <small *ngIf="!formRemedio.get('nome').valid && formRemedio.get('nome').touched" class="form-text text-danger">Nome
+                        do remédio deve conter no mín. 3 e no máx. 40</small>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary">Criar</button>
+                    <a (click)="CancelarRemedio()" class="btn btn-default">Cancelar</a>
+                </div>
+            </div>           
+        </form>
+    </div>
+    <hr/>
+    <br/>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <input #search class="search" type="text" placeholder="Pesquisar..." (keyup)="onSearch(search.value)">
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <ng2-smart-table [settings]="settings" [source]="source" (editConfirm)="oneditConfirm($event)" (deleteConfirm)="ondeleteConfirm($event)">
+                </ng2-smart-table>
+            </div>
+        </div>
+    </div>
+</div>

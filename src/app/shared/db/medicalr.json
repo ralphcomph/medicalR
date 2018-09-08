@@ -17,16 +17,7 @@
       "descricao": "Médico"
     }
   ],
-  "usuarios": [
-    {
-      "id": 1,
-      "perfil": "Administrador",
-      "nome": "RALPH",
-      "email": "teste",
-      "senha": "111"
-    }
-  ],
-  "especialidades": [
+  "especialidade": [
     {
       "id": 1,
       "descricao": "Urologista"
@@ -48,7 +39,7 @@
       "descricao": "Ginecologista"
     }
   ],
-  "tiposexames": [
+  "tiposexame": [
     {
       "id": 1,
       "descricao": "Hemograma"
@@ -70,8 +61,8 @@
       "descricao": "Parasitológico"
     }
   ],
-  "exames": [],
-  "atendentes": [
+  "exame": [],
+  "atendente": [
     {
       "id": 1,
       "ctps": "12345678912",
@@ -83,9 +74,45 @@
       "nome": "Willian"
     }
   ],
-  "medicos": [],
-  "remedios": [],
-  "pacientes": [],
-  "consultas": [],
-  "consultasanexos": []
+  "medico": [],
+  "remedio": [
+    {
+      "id": 1,
+      "nome": "Losartana",
+      "isdel": true
+    },
+    {
+      "id": 2,
+      "nome": "Dorflex",
+      "isdel": false
+    },
+    {
+      "id": 3,
+      "nome": "Losartana",
+      "isdel": true
+    },
+    {
+      "id": 4,
+      "nome": "Losartana",
+      "isdel": false
+    },
+    {
+      "id": 5,
+      "nome": "Neosoro",
+      "isdel": false
+    },
+    {
+      "id": 6,
+      "nome": "Sinvastatina",
+      "isdel": false
+    },
+    {
+      "id": 7,
+      "nome": "Rivotril",
+      "isdel": false
+    }
+  ],
+  "paciente": [],
+  "consulta": [],
+  "consultasanexo": []
 }

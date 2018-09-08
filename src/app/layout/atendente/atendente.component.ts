@@ -16,7 +16,7 @@ import { Atendente } from '../../shared/models/atendente.model'
 
 export class AtendenteComponent implements OnInit {
 
-  public newCTPS: string;
+  public newId: number;
   private feedback: string;
   private msn: string;
 
@@ -38,11 +38,15 @@ export class AtendenteComponent implements OnInit {
       class: 'table table-bordered'
     },
     columns: {
-      ctps: {
-        title: 'CTPS',
+      id: {
+        title: 'ID',
         filter: false,
         editable: false,
-        addable: false,
+        addable: false,      
+      },
+      ctps: {
+        title: 'CTPS',
+        filter: false,      
       },
       nome: {
         title: 'Nome',
@@ -76,6 +80,10 @@ export class AtendenteComponent implements OnInit {
     else {
       this.source.setFilter([
         {
+          field: 'id',
+          search: query
+        },
+        {
           field: 'ctps',
           search: query
         },
@@ -92,7 +100,7 @@ export class AtendenteComponent implements OnInit {
     event.confirm.resolve(event.newData);
   }
 
-  oneditConfirm(event) {      
+  oneditConfirm(event) {
     if (event.newData["nome"].length < 3 || event.newData["nome"].length > 40) {
       this.feedback = "danger";
       this.msn = "Nome atendente deve conter no mín. 3 e no máx. 40 ";
@@ -101,11 +109,24 @@ export class AtendenteComponent implements OnInit {
         this.msn = null;
       }, 3000);
     } else {
-      this.atendenteService.UpdateAtendente(event.newData)
-        .subscribe((ctps: string) => {
-          this.newCTPS = ctps
+      this.atendenteService.SelectAtendenteByCTPS(event.newData["ctps"])
+        .then((atendente: Atendente[]) => {
+          if ((atendente.length > 0) && (atendente[0].id !== event.newData["id"])) {
+            this.feedback = "danger";
+            this.msn = "CTPS já está cadastrado!";
+            setTimeout(() => {
+              this.feedback = null;
+              this.msn = null;
+            }, 3000);
+          }
+          else {
+            this.atendenteService.UpdateAtendente(event.newData)
+              .subscribe((id: number) => {
+                this.newId = id
+              })
+            event.confirm.resolve(event.newData);
+          }
         })
-      event.confirm.resolve(event.newData);
     }
   }
 
@@ -121,7 +142,7 @@ export class AtendenteComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.atendenteService.SelectAtendentes()
+    this.atendenteService.SelectAtendenteAll()
       .then((atendente: Atendente[]) => {
         this.source.load(atendente)
       })
@@ -155,13 +176,14 @@ export class AtendenteComponent implements OnInit {
               let atendente: Atendente = new Atendente(
                 null,
                 this.formAtendente.value.ctps,
-                this.formAtendente.value.nome
+                this.formAtendente.value.nome,
+                false
               )
 
               this.atendenteService.CreateAtendente(atendente)
-                .subscribe((ctps: string) => {
+                .subscribe((id: number) => {
                   this.feedback = "success";
-                  this.msn = "Atendente " + ctps + " criado com sucesso!";
+                  this.msn = "Atendente " + id + " criado com sucesso!";
                   this.formAtendente.reset();
 
                   setTimeout(() => {
@@ -169,7 +191,7 @@ export class AtendenteComponent implements OnInit {
                     this.msn = null;
                   }, 3000);
 
-                  this.atendenteService.SelectAtendentes()
+                  this.atendenteService.SelectAtendenteAll()
                     .then((atendente: Atendente[]) => {
                       this.source.load(atendente)
                     })

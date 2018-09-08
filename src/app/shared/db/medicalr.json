@@ -66,12 +66,20 @@
     {
       "id": 1,
       "ctps": "12345678912",
-      "nome": "Robson"
+      "nome": "Robsonn",
+      "isdel": true
     },
     {
       "id": 2,
       "ctps": "09876543210",
-      "nome": "Willian"
+      "nome": "Mara",
+      "isdel": false
+    },
+    {
+      "id": 3,
+      "ctps": "12345678912",
+      "nome": "Robson",
+      "isdel": false
     }
   ],
   "medico": [],

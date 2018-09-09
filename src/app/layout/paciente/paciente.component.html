@@ -1,5 +1,5 @@
 <div [@routerTransition]>
-    <app-page-header [heading]="'Atendentes'" [icon]="'fa fa-bell-o'"></app-page-header>    
+    <app-page-header [heading]="'Pacientes'" [icon]="'fa fa-address-card-o'"></app-page-header>    
     <div class="row">
         <div class="alert alert-{{feedback}}" *ngIf="msn !== undefined" role="alert">
             {{msn}}
@@ -7,25 +7,25 @@
     </div>    
     <hr/>
     <div class="container">
-        <form role="form" [formGroup]="formAtendente" (ngSubmit)="CriarAtendente()">
+        <form role="form" [formGroup]="formPaciente" (ngSubmit)="CriarPaciente()">
             <div class="row">
                 <div class="form-group col-md-4">
-                    <label for="ctps">CTPS</label>
-                    <input type="text" class="form-control" placeholder="Digite o número CTPS" id="ctps" formControlName="ctps">
-                    <small *ngIf="!formAtendente.get('ctps').valid && formAtendente.get('ctps').touched" class="form-text text-danger">CTPS
+                    <label for="cpf">CPF</label>
+                    <input type="text" class="form-control" placeholder="Digite o número CPF" id="cpf" formControlName="cpf">
+                    <small *ngIf="!formPaciente.get('cpf').valid && formPaciente.get('cpf').touched" class="form-text text-danger">CPF
                         deve conter 11 números</small>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="nome">Nome</label>
                     <input type="text" class="form-control" placeholder="Digite o nome" id="nome" formControlName="nome">
-                    <small *ngIf="!formAtendente.get('nome').valid && formAtendente.get('nome').touched" class="form-text text-danger">Nome
-                        do atendente deve conter no mín. 3 e no máx. 40</small>
+                    <small *ngIf="!formPaciente.get('nome').valid && formPaciente.get('nome').touched" class="form-text text-danger">Nome
+                        do paciente deve conter no mín. 3 e no máx. 40</small>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <button type="submit" class="btn btn-primary">Criar</button>
-                    <a (click)="CancelarAtendente()" class="btn btn-default">Cancelar</a>
+                    <a (click)="CancelarPaciente()" class="btn btn-default">Cancelar</a>
                 </div>
             </div>           
         </form>

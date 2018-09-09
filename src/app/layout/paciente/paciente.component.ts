@@ -3,25 +3,25 @@ import { routerTransition } from '../../router.animations';
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 
 import { LocalDataSource } from 'ng2-smart-table';
-import { AtendenteService } from '../../shared/services/atendente.service'
-import { Atendente } from '../../shared/models/atendente.model'
+import { PacienteService } from '../../shared/services/paciente.service'
+import { Paciente } from '../../shared/models/paciente.model'
 
 @Component({
-  selector: 'app-atendente',
-  templateUrl: './atendente.component.html',
-  styleUrls: ['./atendente.component.scss'],
-  providers: [AtendenteService],
+  selector: 'app-paciente',
+  templateUrl: './paciente.component.html',
+  styleUrls: ['./paciente.component.scss'],
+  providers: [PacienteService],
   animations: [routerTransition()]
 })
 
-export class AtendenteComponent implements OnInit {
+export class PacienteComponent implements OnInit {
 
   public newId: number;
   private feedback: string;
   private msn: string;
 
-  public formAtendente: FormGroup = new FormGroup({
-    'ctps': new FormControl(null, [Validators.required, Validators.minLength(11), Validators.maxLength(11)]),
+  public formPaciente: FormGroup = new FormGroup({
+    'cpf': new FormControl(null, [Validators.required, Validators.minLength(11), Validators.maxLength(11)]),
     'nome': new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(40)])
   })
 
@@ -29,7 +29,7 @@ export class AtendenteComponent implements OnInit {
     mode: 'inline',
     hideHeader: false,
     hideSubHeader: true,
-    noDataMessage: "Nenhum atendente cadastrado",
+    noDataMessage: "Nenhum paciente cadastrado",
     actions: {
       columnTitle: "",
       add: false,
@@ -44,8 +44,8 @@ export class AtendenteComponent implements OnInit {
         editable: false,
         addable: false,      
       },
-      ctps: {
-        title: 'CTPS',
+      cpf: {
+        title: 'CPF',
         filter: false,      
       },
       nome: {
@@ -68,7 +68,7 @@ export class AtendenteComponent implements OnInit {
   source: LocalDataSource;
 
   constructor(
-    private atendenteService: AtendenteService
+    private pacienteService: PacienteService
   ) {
     this.source = new LocalDataSource();
   }
@@ -84,7 +84,7 @@ export class AtendenteComponent implements OnInit {
           search: query
         },
         {
-          field: 'ctps',
+          field: 'cpf',
           search: query
         },
         {
@@ -96,31 +96,31 @@ export class AtendenteComponent implements OnInit {
   }
 
   oncreateConfirm(event) {
-    this.atendenteService.CreateAtendente(event.newData);
+    this.pacienteService.CreatePaciente(event.newData);
     event.confirm.resolve(event.newData);
   }
 
   oneditConfirm(event) {
     if (event.newData["nome"].length < 3 || event.newData["nome"].length > 40) {
       this.feedback = "danger";
-      this.msn = "Nome do atendente deve conter no mín. 3 e no máx. 40 ";
+      this.msn = "Nome do paciente deve conter no mín. 3 e no máx. 40 ";
       setTimeout(() => {
         this.feedback = null;
         this.msn = null;
       }, 3000);
     } else {
-      this.atendenteService.SelectAtendenteByCTPS(event.newData["ctps"])
-        .then((atendente: Atendente[]) => {
-          if ((atendente.length > 0) && (atendente[0].id !== event.newData["id"])) {
+      this.pacienteService.SelectPacienteByCPF(event.newData["cpf"])
+        .then((paciente: Paciente[]) => {
+          if ((paciente.length > 0) && (paciente[0].id !== event.newData["id"])) {
             this.feedback = "danger";
-            this.msn = "CTPS já está cadastrado!";
+            this.msn = "CPF já está cadastrado!";
             setTimeout(() => {
               this.feedback = null;
               this.msn = null;
             }, 3000);
           }
           else {
-            this.atendenteService.UpdateAtendente(event.newData)
+            this.pacienteService.UpdatePaciente(event.newData)
               .subscribe((id: number) => {
                 this.newId = id
               })
@@ -131,8 +131,8 @@ export class AtendenteComponent implements OnInit {
   }
 
   ondeleteConfirm(event) {
-    if (window.confirm('Tem certeza que deseja excluir o atendente ' + event.data.ctps + '?')) {
-      this.atendenteService.DeleteAtendente(event.data)
+    if (window.confirm('Tem certeza que deseja excluir o paciente ' + event.data.cpf + '?')) {
+      this.pacienteService.DeletePaciente(event.data)
         .subscribe(() => {
         })
       event.confirm.resolve(event.data);
@@ -142,58 +142,58 @@ export class AtendenteComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.atendenteService.SelectAtendenteAll()
-      .then((atendente: Atendente[]) => {
-        this.source.load(atendente)
+    this.pacienteService.SelectPacienteAll()
+      .then((paciente: Paciente[]) => {
+        this.source.load(paciente)
       })
   }
 
-  public CriarAtendente(): void {
-    this.atendenteService.SelectAtendenteByCTPS(this.formAtendente.value.ctps)
-      .then((atendente: Atendente[]) => {
-        if (atendente.length > 0) {
+  public CriarPaciente(): void {
+    this.pacienteService.SelectPacienteByCPF(this.formPaciente.value.cpf)
+      .then((paciente: Paciente[]) => {
+        if (paciente.length > 0) {
           this.feedback = "danger";
-          this.msn = "CTPS já está cadastrado!";
+          this.msn = "CPF já está cadastrado!";
           setTimeout(() => {
             this.feedback = null;
             this.msn = null;
           }, 3000);
         }
         else {
-          if (isNaN(this.formAtendente.value.ctps)) {
+          if (isNaN(this.formPaciente.value.cpf)) {
             this.feedback = "danger";
-            this.msn = "Campo CTPS deve conter somente números!";
+            this.msn = "Campo CPF deve conter somente números!";
             setTimeout(() => {
               this.feedback = null;
               this.msn = null;
             }, 3000);
           }
           else {
-            if (this.formAtendente.status === 'INVALID') {
-              this.formAtendente.get('ctps').markAsTouched()
-              this.formAtendente.get('nome').markAsTouched()              
+            if (this.formPaciente.status === 'INVALID') {
+              this.formPaciente.get('cpf').markAsTouched()
+              this.formPaciente.get('nome').markAsTouched()             
             } else {
-              let atendente: Atendente = new Atendente(
+              let paciente: Paciente = new Paciente(
                 null,
-                this.formAtendente.value.ctps,
-                this.formAtendente.value.nome,
+                this.formPaciente.value.cpf,
+                this.formPaciente.value.nome,
                 false
               )
 
-              this.atendenteService.CreateAtendente(atendente)
+              this.pacienteService.CreatePaciente(paciente)
                 .subscribe((id: number) => {
                   this.feedback = "success";
-                  this.msn = "Atendente " + id + " criado com sucesso!";
-                  this.formAtendente.reset();
+                  this.msn = "Paciente " + id + " criado com sucesso!";
+                  this.formPaciente.reset();
 
                   setTimeout(() => {
                     this.feedback = null;
                     this.msn = null;
                   }, 3000);
 
-                  this.atendenteService.SelectAtendenteAll()
-                    .then((atendente: Atendente[]) => {
-                      this.source.load(atendente)
+                  this.pacienteService.SelectPacienteAll()
+                    .then((paciente: Paciente[]) => {
+                      this.source.load(paciente)
                     })
                 })
             }
@@ -202,7 +202,7 @@ export class AtendenteComponent implements OnInit {
       })
   }
 
-  public CancelarAtendente(): void {
-    this.formAtendente.reset();
+  public CancelarPaciente(): void {
+    this.formPaciente.reset();
   }
 }

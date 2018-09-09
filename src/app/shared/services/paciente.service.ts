@@ -2,58 +2,58 @@ import { Http, RequestOptions, Headers, Response } from '@angular/http'
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs/Observable'
 
-import { Atendente } from '../models/atendente.model'
+import { Paciente } from '../models/paciente.model'
 import { URL_API } from '../apis/api'
 
 import 'rxjs/add/operator/toPromise'
 import 'rxjs/add/operator/map'
 
 @Injectable()
-export class AtendenteService {   
+export class PacienteService {   
     
     constructor(private http: Http){}
     
-    public SelectAtendenteAll(): Promise<Atendente[]> {              
-        return this.http.get(`${URL_API}/atendente?isdel=false`)
+    public SelectPacienteAll(): Promise<Paciente[]> {              
+        return this.http.get(`${URL_API}/paciente?isdel=false`)
             .toPromise()
             .then((resp: Response) => resp.json())             
     }  
 
-    public SelectAtendenteByCTPS(ctps : string): Promise<Atendente[]> {              
-        return this.http.get(`${URL_API}/atendente?ctps=${ctps}&isdel=false`)
+    public SelectPacienteByCPF(cpf : string): Promise<Paciente[]> {              
+        return this.http.get(`${URL_API}/paciente?cpf=${cpf}&isdel=false`)
             .toPromise()
             .then((resp: Response) => resp.json())             
     }  
 
-    public CreateAtendente(atendente: Atendente): Observable<number> {
+    public CreatePaciente(paciente: Paciente): Observable<number> {
         let headers: Headers = new Headers()
         headers.append('Content-type', 'application/json')
         return this.http.post(
-            `${URL_API}/atendente`,
-            JSON.stringify(atendente),
+            `${URL_API}/paciente`,
+            JSON.stringify(paciente),
             new RequestOptions({ headers: headers })
         )
         .map((resposta: Response) => resposta.json().id)
     }   
    
-    public UpdateAtendente(atendente: Atendente): Observable<number> {       
+    public UpdatePaciente(paciente: Paciente): Observable<number> {       
         let headers: Headers = new Headers()
         headers.append('Content-type', 'application/json')
         return this.http.put(
-            `${URL_API}/atendente/${atendente.id}`,
-            JSON.stringify(atendente),
+            `${URL_API}/paciente/${paciente.id}`,
+            JSON.stringify(paciente),
             new RequestOptions({ headers: headers })
         )
         .map((resposta: Response) => resposta.json().id)       
     }     
 
-    public DeleteAtendente(atendente: Atendente): Observable<number> {       
+    public DeletePaciente(paciente: Paciente): Observable<number> {       
         let headers: Headers = new Headers()
-        atendente.isdel = true;
+        paciente.isdel = true;
         headers.append('Content-type', 'application/json')
         return this.http.put(
-            `${URL_API}/atendente/${atendente.id}`,
-            JSON.stringify(atendente),
+            `${URL_API}/paciente/${paciente.id}`,
+            JSON.stringify(paciente),
             new RequestOptions({ headers: headers })
         )
         .map((resposta: Response) => resposta.json().id)       

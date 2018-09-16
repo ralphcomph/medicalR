@@ -113,7 +113,7 @@ export class AtendenteComponent implements OnInit {
         .then((atendente: Atendente[]) => {
           if ((atendente.length > 0) && (atendente[0].id !== event.newData["id"])) {
             this.feedback = "danger";
-            this.msn = "CTPS já está cadastrado!";
+            this.msn = "CTPS já está cadastrado.";
             setTimeout(() => {
               this.feedback = null;
               this.msn = null;
@@ -153,7 +153,7 @@ export class AtendenteComponent implements OnInit {
       .then((atendente: Atendente[]) => {
         if (atendente.length > 0) {
           this.feedback = "danger";
-          this.msn = "CTPS já está cadastrado!";
+          this.msn = "CTPS já está cadastrado.";
           setTimeout(() => {
             this.feedback = null;
             this.msn = null;
@@ -183,7 +183,7 @@ export class AtendenteComponent implements OnInit {
               this.atendenteService.CreateAtendente(atendente)
                 .subscribe((id: number) => {
                   this.feedback = "success";
-                  this.msn = "Atendente " + id + " criado com sucesso!";
+                  this.msn = "Atendente " + id + " criado com sucesso.";
                   this.formAtendente.reset();
 
                   setTimeout(() => {

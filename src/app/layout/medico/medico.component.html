@@ -1,0 +1,77 @@
+<div [@routerTransition]>
+    <app-page-header [heading]="'Médicos'" [icon]="'fa fa-stethoscope'"></app-page-header>
+    <div class="row">
+        <div class="alert alert-{{feedback}}" *ngIf="msn !== undefined" role="alert">
+            {{msn}}
+        </div>
+    </div>
+    <hr/>
+    <div class="container">
+        <form role="form" [formGroup]="formMedico" (ngSubmit)="CriarMedico()">
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="crm">CRM</label>
+                    <input type="text" class="form-control" placeholder="Digite o número CRM" id="crm" formControlName="crm">
+                    <small *ngIf="!formMedico.get('crm').valid && formMedico.get('crm').touched" class="form-text text-danger">CRM
+                        deve conter 11 números</small>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="nome">Nome</label>
+                    <input type="text" class="form-control" placeholder="Digite o nome" id="nome" formControlName="nome">
+                    <small *ngIf="!formMedico.get('nome').valid && formMedico.get('nome').touched" class="form-text text-danger">Nome
+                        do atendente deve conter no mín. 3 e no máx. 40</small>
+                </div>
+
+                <!--<div class="form-group col-md-4">
+                    <label for="id_esp">Especialidade</label>
+                    <select 
+                    class="form-control"
+                    id="id_esp"
+                    formControlName="id_esp"
+                  >                
+                    <option value="0">Selecione uma opção</option>
+                    <option value="1">Urologista</option>
+                    <option value="2">Cardiologista</option>
+                  </select>      
+                  <small *ngIf="!formMedico.get('id_esp').valid && formMedico.get('id_esp').touched" class="form-text text-danger">Especialidade inválida</small>
+                </div>-->
+                <div class="form-group col-md-4">
+                    <label for="id_esp">Especialidade</label>
+                    <select #sel (change)="selectOption(sel.value)" class="form-control" id="id_esp" formControlName="id_esp">
+                            <option value="null">Selecione uma opção</option>
+                        <option *ngFor="let esp of EspecialidadeList" [value]="esp.value">
+                            {{esp.title}}
+                        </option>
+                        
+                    </select>
+                    <small *ngIf="!formMedico.get('id_esp').valid && formMedico.get('id_esp').touched" class="form-text text-danger">Especialidade inválida</small>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary">Criar</button>
+                    <a (click)="CancelarMedico()" class="btn btn-default">Cancelar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+    <hr/>
+    <br/>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <input #search class="search" type="text" placeholder="Pesquisar..." (keyup)="onSearch(search.value)">
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <ng2-smart-table [settings]="settings" [source]="source" (editConfirm)="oneditConfirm($event)" (deleteConfirm)="ondeleteConfirm($event)">
+                </ng2-smart-table>
+            </div>
+        </div>
+    </div>
+</div>

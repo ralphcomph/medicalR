@@ -113,7 +113,7 @@ export class PacienteComponent implements OnInit {
         .then((paciente: Paciente[]) => {
           if ((paciente.length > 0) && (paciente[0].id !== event.newData["id"])) {
             this.feedback = "danger";
-            this.msn = "CPF já está cadastrado!";
+            this.msn = "CPF já está cadastrado.";
             setTimeout(() => {
               this.feedback = null;
               this.msn = null;
@@ -153,7 +153,7 @@ export class PacienteComponent implements OnInit {
       .then((paciente: Paciente[]) => {
         if (paciente.length > 0) {
           this.feedback = "danger";
-          this.msn = "CPF já está cadastrado!";
+          this.msn = "CPF já está cadastrado.";
           setTimeout(() => {
             this.feedback = null;
             this.msn = null;
@@ -183,7 +183,7 @@ export class PacienteComponent implements OnInit {
               this.pacienteService.CreatePaciente(paciente)
                 .subscribe((id: number) => {
                   this.feedback = "success";
-                  this.msn = "Paciente " + id + " criado com sucesso!";
+                  this.msn = "Paciente " + id + " criado com sucesso.";
                   this.formPaciente.reset();
 
                   setTimeout(() => {

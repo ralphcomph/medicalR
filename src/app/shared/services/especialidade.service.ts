@@ -1,18 +1,20 @@
 import { Http, Response } from '@angular/http'
 import { Injectable } from '@angular/core'
 
-import { Perfil } from '../models/perfil.model'
+import { Especialidade } from '../models/especialidade.model'
 import { URL_API } from '../apis/api'
 
 import 'rxjs/add/operator/toPromise'
+import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/retry'
 
 @Injectable()
-export class PerfilService {   
+export class EspecialidadeService {   
     
     constructor(private http: Http){}
     
-    public SelectPerfilAll(): Promise<Perfil[]> {                     
-        return this.http.get(`${URL_API}/perfil`)
+    public SelectEspecialidadeAll(): Promise<Especialidade[]> {                     
+        return this.http.get(`${URL_API}/especialidade`)
             .toPromise()
             .then((resp: Response) => resp.json())             
     }  

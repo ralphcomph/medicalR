@@ -19,7 +19,7 @@ export class AtendenteService {
             .then((resp: Response) => resp.json())             
     }  
 
-    public SelectAtendenteByCTPS(ctps : string): Promise<Atendente[]> {              
+    public SelectAtendenteByCTPS(ctps: string): Promise<Atendente[]> {              
         return this.http.get(`${URL_API}/atendente?ctps=${ctps}&isdel=false`)
             .toPromise()
             .then((resp: Response) => resp.json())             

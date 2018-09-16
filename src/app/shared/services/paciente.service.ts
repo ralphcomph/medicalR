@@ -19,7 +19,7 @@ export class PacienteService {
             .then((resp: Response) => resp.json())             
     }  
 
-    public SelectPacienteByCPF(cpf : string): Promise<Paciente[]> {              
+    public SelectPacienteByCPF(cpf: string): Promise<Paciente[]> {              
         return this.http.get(`${URL_API}/paciente?cpf=${cpf}&isdel=false`)
             .toPromise()
             .then((resp: Response) => resp.json())             

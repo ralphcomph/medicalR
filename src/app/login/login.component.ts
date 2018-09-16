@@ -40,15 +40,15 @@ export class LoginComponent implements OnInit {
                 .catch((error: firebase.auth.Error) => {                   
                     switch (error.code) {                      
                         case "auth/wrong-password": {
-                            this.msnerror = "Usuário e/ou Senha inválida!";
+                            this.msnerror = "Usuário e/ou Senha inválida.";
                             break;
                         }
                         case "auth/user-disabled": {
-                            this.msnerror = "Usuário desativado!";
+                            this.msnerror = "Usuário desativado.";
                             break;
                         }
                         default: {
-                            this.msnerror = "Erro ao tentar registrar usuário!";
+                            this.msnerror = "Erro ao tentar registrar usuário.";
                             break;
                         }
                     }

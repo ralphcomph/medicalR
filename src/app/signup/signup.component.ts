@@ -67,11 +67,11 @@ export class SignupComponent implements OnInit {
                     .catch((error: firebase.auth.Error) => {
                         switch (error.code) {
                             case "auth/email-already-in-use": {
-                                this.msnerror = "O e-mail fornecido já está em uso por outro usuário!";
+                                this.msnerror = "O e-mail fornecido já está em uso por outro usuário.";
                                 break;
                             }
                             default: {
-                                this.msnerror = "Erro ao tentar registrar usuário!";
+                                this.msnerror = "Erro ao tentar registrar usuário.";
                                 break;
                             }
                         }

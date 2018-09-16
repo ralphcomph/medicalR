@@ -131,7 +131,7 @@ export class UsuarioComponent implements OnInit {
 
   oneditConfirm(event) {   
     if (this.PerfilLogado !== "Administrador") {
-      alert("Acesso negado!");    
+      alert("Acesso negado.");    
     }else {    
     this.usuarioService.updateUsuario(event.newData)
     event.confirm.resolve(event.newData);

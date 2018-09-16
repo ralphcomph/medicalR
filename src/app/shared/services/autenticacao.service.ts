@@ -22,7 +22,7 @@ export class AutenticacaoService {
     return this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
   }
 
-  registerUser(email: string, pass: string) {
+  RegisterUsuario(email: string, pass: string) {
     return new Promise((resolve, reject) => {
       this.afAuth.auth.createUserWithEmailAndPassword(email, pass)
         .then(userData => resolve(userData),

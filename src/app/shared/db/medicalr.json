@@ -82,7 +82,43 @@
       "isdel": false
     }
   ],
-  "medico": [],
+  "medico": [
+    {
+      "id": 1,
+      "crm": "12345678901",
+      "nome": "Robson",
+      "id_esp": "2",
+      "isdel": true
+    },
+    {
+      "id": 2,
+      "crm": "12345678903",
+      "nome": "Robson",
+      "id_esp": "1",
+      "isdel": false
+    },
+    {
+      "id": 3,
+      "crm": "12345678902",
+      "nome": "Willian",
+      "id_esp": "5",
+      "isdel": false
+    },
+    {
+      "id": 4,
+      "crm": "12345678904",
+      "nome": "Roseeee",
+      "id_esp": "3",
+      "isdel": false
+    },
+    {
+      "id": 5,
+      "crm": "12345678901",
+      "nome": "Tiago",
+      "id_esp": "3",
+      "isdel": false
+    }
+  ],
   "remedio": [
     {
       "id": 1,

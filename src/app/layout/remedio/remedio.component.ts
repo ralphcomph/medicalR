@@ -104,7 +104,7 @@ export class RemedioComponent implements OnInit {
         .then((remedio: Remedio[]) => {           
           if ((remedio.length > 0) && (remedio[0].id !== event.newData["id"])) {
             this.feedback = "danger";
-            this.msn = "Nome já está cadastrado!";
+            this.msn = "Nome já está cadastrado.";
             setTimeout(() => {
               this.feedback = null;
               this.msn = null;
@@ -144,7 +144,7 @@ export class RemedioComponent implements OnInit {
       .then((remedio: Remedio[]) => {     
         if (remedio.length > 0) {
           this.feedback = "danger";
-          this.msn = "Nome já está cadastrado!";
+          this.msn = "Nome já está cadastrado.";
           setTimeout(() => {
             this.feedback = null;
             this.msn = null;
@@ -163,7 +163,7 @@ export class RemedioComponent implements OnInit {
             this.remedioService.CreateRemedio(remedio)
               .subscribe((id: number) => {
                 this.feedback = "success";
-                this.msn = "Remédio " + id + " criado com sucesso!";
+                this.msn = "Remédio " + id + " criado com sucesso.";
                 this.formRemedio.reset();
 
                 setTimeout(() => {

@@ -2,68 +2,58 @@ import { Http, RequestOptions, Headers, Response } from '@angular/http'
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs/Observable'
 
-import { Remedio } from '../models/remedio.model'
+import { Medico } from '../models/medico.model'
 import { URL_API } from '../apis/api'
 
 import 'rxjs/add/operator/toPromise'
 import 'rxjs/add/operator/map'
 
 @Injectable()
-export class RemedioService {   
+export class MedicoService {   
     
     constructor(private http: Http){}
     
-    public SelectRemedioAll(): Promise<Remedio[]> {              
-        return this.http.get(`${URL_API}/remedio?isdel=false`)
+    public SelectMedicoAll(): Promise<Medico[]> {              
+        return this.http.get(`${URL_API}/medico?isdel=false`)
             .toPromise()
             .then((resp: Response) => resp.json())             
     }  
 
-    public SelectRemedioByNome(nome: string): Promise<Remedio[]> {              
-        return this.http.get(`${URL_API}/remedio?nome=${nome}&isdel=false`)
+    public SelectMedicoByCRM(crm : string): Promise<Medico[]> {              
+        return this.http.get(`${URL_API}/medico?crm=${crm}&isdel=false`)
             .toPromise()
             .then((resp: Response) => resp.json())             
     }  
 
-    public CreateRemedio(remedio: Remedio): Observable<number> {
+    public CreateMedico(medico: Medico): Observable<number> {
         let headers: Headers = new Headers()
         headers.append('Content-type', 'application/json')
         return this.http.post(
-            `${URL_API}/remedio`,
-            JSON.stringify(remedio),
+            `${URL_API}/medico`,
+            JSON.stringify(medico),
             new RequestOptions({ headers: headers })
         )
         .map((resposta: Response) => resposta.json().id)
     }   
    
-    public UpdateRemedio(remedio: Remedio): Observable<number> {       
+    public UpdateMedico(medico: Medico): Observable<number> {       
         let headers: Headers = new Headers()
         headers.append('Content-type', 'application/json')
         return this.http.put(
-            `${URL_API}/remedio/${remedio.id}`,
-            JSON.stringify(remedio),
+            `${URL_API}/medico/${medico.id}`,
+            JSON.stringify(medico),
             new RequestOptions({ headers: headers })
         )
         .map((resposta: Response) => resposta.json().id)       
-    }   
+    }     
 
-    /*public DeleteRemedio(remedio: Remedio): Observable<null> {       
+    public DeleteMedico(medico: Medico): Observable<number> {       
         let headers: Headers = new Headers()
-        headers.append('Content-type', 'application/json')
-        return this.http.delete(
-            `${URL_API}/remedio/${remedio.id}`,           
-            new RequestOptions({ headers: headers })
-        )
-        .map((resposta: Response) => null)       
-    }*/  
-
-    public DeleteRemedio(remedio: Remedio): Observable<number> {       
-        let headers: Headers = new Headers()
-        remedio.isdel = true;
+        medico.isdel = true;
         headers.append('Content-type', 'application/json')
         return this.http.put(
-            `${URL_API}/remedio/${remedio.id}`,
-            JSON.stringify(remedio),
+            `${URL_API}/medico/${medico.id}`,
+            JSON.stringify(medico),
             new RequestOptions({ headers: headers })
         )
         .map((resposta: Response) => resposta.json().id)       
